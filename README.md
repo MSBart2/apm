@@ -12,11 +12,9 @@ Use it to:
 - **Get unstuck** — reference or cherry-pick individual files mid-workshop
 - **Bootstrap a new FanHub fork** — skip the build-from-scratch phase and go straight to feature work
 
-## Packages
+## What's Included
 
-### `fanhub-plugin` — Complete Workshop Configuration
-
-The full Copilot AI layer for FanHub's `.NET` track (ASP.NET Core + Blazor + SQLite).
+This repo **is** the package — a complete Copilot AI layer for FanHub's `.NET` track (ASP.NET Core + Blazor + SQLite).
 
 | Module | Type                    | What It Adds                                                                                                                                                 |
 | ------ | ----------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ |
@@ -37,17 +35,14 @@ The full Copilot AI layer for FanHub's `.NET` track (ASP.NET Core + Blazor + SQL
 - VS Code with the [GitHub Copilot](https://marketplace.visualstudio.com/items?itemName=GitHub.copilot) extension
 - Node.js (for the MCP server and `apm` CLI)
 
-### Install the full plugin
+### Install
 
 ```bash
 # From inside your cloned FanHub repo:
-apm install /path/to/apm/fanhub-plugin
-
-# Once published to the registry:
-apm install @fanhub/workshop
+apm install MSBart2/apm
 ```
 
-This copies all files from `fanhub-plugin/` into the correct locations in your FanHub repo and writes `apm-lock.yml` so every developer gets an identical configuration.
+This deploys all primitives from `.apm/` into the correct locations in your FanHub repo and writes `apm.lock.yaml` so every developer gets an identical configuration.
 
 ### What lands in your FanHub repo
 
@@ -94,7 +89,7 @@ node mcp-servers/fanhub-api-server.js
 
 ## Workshop Demo (5-minute reveal)
 
-See [fanhub-plugin/WALKTHROUGH.md](fanhub-plugin/WALKTHROUGH.md) for the step-by-step script used to show participants the "after" state at the start of a session — including what Copilot says _before_ and _after_ installing the plugin.
+See [WALKTHROUGH.md](WALKTHROUGH.md) for the step-by-step script used to show participants the "after" state at the start of a session — including what Copilot says _before_ and _after_ installing the plugin.
 
 ## Relationship to FanHub
 

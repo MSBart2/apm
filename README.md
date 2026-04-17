@@ -48,7 +48,7 @@ The `install-docs` script must be added to your project's `apm.yml` scripts bloc
 
 ```yaml
 scripts:
-  install-docs: "cp apm_modules/MSBart2/apm/docs/architecture.md docs/architecture.md && cp apm_modules/MSBart2/apm/docs/breaking-bad-universe.md docs/breaking-bad-universe.md && cp apm_modules/MSBart2/apm/.apm/instructions/copilot-instructions.instructions.md .github/copilot-instructions.md"
+  install-docs: "powershell -Command \"New-Item -ItemType Directory -Force docs | Out-Null; New-Item -ItemType Directory -Force .github | Out-Null; Invoke-WebRequest https://raw.githubusercontent.com/MSBart2/apm/main/docs/architecture.md -OutFile docs/architecture.md; Invoke-WebRequest https://raw.githubusercontent.com/MSBart2/apm/main/docs/breaking-bad-universe.md -OutFile docs/breaking-bad-universe.md; Invoke-WebRequest https://raw.githubusercontent.com/MSBart2/apm/main/.apm/instructions/copilot-instructions.instructions.md -OutFile .github/copilot-instructions.md\""
 ```
 
 ### What lands in your FanHub repo

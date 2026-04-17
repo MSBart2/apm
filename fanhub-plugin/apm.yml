@@ -3,63 +3,25 @@ version: 1.0.0
 description: >
   Complete GitHub Copilot configuration for the FanHub Breaking Bad workshop.
   Includes instructions, prompts, skills, agents, and MCP servers across modules 01–06.
-  Install into a freshly-cloned fanhub-unplugged repo to get everything participants
+  Install into a freshly-cloned FanHub repo to get everything participants
   build from scratch — delivered in one command.
+author: MSBart2
+license: Apache-2.0
+target: vscode
 
-# ── Module 01: Instructions ──────────────────────────────────────────────────
-instructions:
-  - src: .github/copilot-instructions.md
-    dest: .github/copilot-instructions.md
-
-docs:
-  - src: docs/architecture.md
-    dest: docs/architecture.md
-  - src: docs/breaking-bad-universe.md
-    dest: docs/breaking-bad-universe.md
-
-# ── Module 03: Prompts ───────────────────────────────────────────────────────
-prompts:
-  - src: .github/prompts/check-data-accuracy.prompt.md
-    dest: .github/prompts/check-data-accuracy.prompt.md
-  - src: .github/prompts/good-idea.prompt.md
-    dest: .github/prompts/good-idea.prompt.md
-  - src: .github/prompts/plan-loreCardAndLorePage.prompt.md
-    dest: .github/prompts/plan-loreCardAndLorePage.prompt.md
-  - src: .github/prompts/prompt-to-skill.prompt.md
-    dest: .github/prompts/prompt-to-skill.prompt.md
-  - src: .github/prompts/refresh-docs.prompt.md
-    dest: .github/prompts/refresh-docs.prompt.md
-  - src: .github/prompts/risk-prioritizer.prompt.md
-    dest: .github/prompts/risk-prioritizer.prompt.md
-
-# ── Module 04: Skills ────────────────────────────────────────────────────────
-skills:
-  - src: .github/skills/check-data-accuracy/
-    dest: .github/skills/check-data-accuracy/
-  - src: .github/skills/lore-accuracy-check/
-    dest: .github/skills/lore-accuracy-check/
-  - src: .github/skills/new-card-skill/
-    dest: .github/skills/new-card-skill/
-
-# ── Module 05: MCP Servers ───────────────────────────────────────────────────
-mcp:
-  - name: fanhub-api
-    src: mcp-servers/fanhub-api-server.js
-    dest: mcp-servers/fanhub-api-server.js
-    vscode:
-      type: stdio
+dependencies:
+  mcp:
+    # Module 05 — FanHub REST API (requires dotnet backend running on :5265)
+    - name: fanhub-api
+      registry: false
+      transport: stdio
       command: node
       args: ["${workspaceFolder}/mcp-servers/fanhub-api-server.js"]
       env:
         FANHUB_API_URL: "http://localhost:5265"
-  - name: fanhub-db
-    vscode:
+    # Module 05 — Direct SQLite access via fanhub.db
+    - name: fanhub-db
+      registry: false
+      transport: stdio
       command: npx
       args: ["-y", "mcp-sqlite", "${workspaceFolder}/dotnet/Backend/fanhub.db"]
-
-# ── Module 06: Agents ────────────────────────────────────────────────────────
-agents:
-  - src: .github/agents/scaffold-entity.agent.md
-    dest: .github/agents/scaffold-entity.agent.md
-  - src: .github/agents/plan.agent.md
-    dest: .github/agents/plan.agent.md

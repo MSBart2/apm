@@ -1,0 +1,8 @@
+name: MSBart2-apm
+version: 1.0.0
+description: >
+  Agent Package Manager repository for FanHub workshop plugins.
+  Install individual packages from subdirectories, e.g.:
+  apm install MSBart2/apm/fanhub-plugin
+author: MSBart2
+license: Apache-2.0

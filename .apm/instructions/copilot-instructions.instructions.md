@@ -1,3 +1,7 @@
+---
+applyTo: "**"
+---
+
 # FanHub Copilot Instructions
 
 > **Active implementation**: `dotnet/` — ASP.NET Core Web API backend + Blazor Server frontend

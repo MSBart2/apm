@@ -18,7 +18,7 @@ This repo **is** the package — a complete Copilot AI layer for FanHub's `.NET`
 
 | Module | Type                    | What It Adds                                                                                                                                                 |
 | ------ | ----------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| 01     | Repository instructions | `.github/copilot-instructions.md` — coding conventions, architecture pointers, and bug-fix guidance scoped to the `dotnet/` track                            |
+| 01     | Repository instructions | `.github/instructions/copilot-instructions.instructions.md` — coding conventions, architecture pointers, and bug-fix guidance scoped to the `dotnet/` track  |
 | 01     | Architecture doc        | `docs/architecture.md` — full reference: routes, models, EF Core setup, seed data, conventions, security notes (deployed via `apm run install-docs`)         |
 | 01     | Lore doc                | `docs/breaking-bad-universe.md` — Breaking Bad canon reference for skills and agents (deployed via `apm run install-docs`)                                   |
 | 03     | Prompts (×6)            | `check-data-accuracy`, `good-idea`, `plan-loreCardAndLorePage`, `prompt-to-skill`, `refresh-docs`, `risk-prioritizer`                                        |
@@ -56,7 +56,8 @@ scripts:
 ```
 fanhub/
 ├── .github/
-│   ├── copilot-instructions.md      ← module 01
+│   ├── instructions/
+│   │   └── copilot-instructions.instructions.md  ← module 01 (applyTo: "**")
 │   ├── prompts/                     ← module 03
 │   │   ├── check-data-accuracy.prompt.md
 │   │   ├── good-idea.prompt.md

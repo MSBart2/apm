@@ -7,7 +7,7 @@ description: >
   build from scratch — delivered in one command.
 author: MSBart2
 license: Apache-2.0
-target: vscode
+target: all
 
 dependencies:
   mcp:

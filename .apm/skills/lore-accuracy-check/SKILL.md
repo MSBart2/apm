@@ -3,7 +3,7 @@ name: lore-accuracy-check
 description: >
   Use this skill when asked to verify, validate, or fact-check a lore entry, character
   description, seed data record, or any Breaking Bad content against the canonical
-  reference in docs/breaking-bad-universe.md. Triggers on: check lore, verify lore,
+  reference in .github/instructions/breaking-bad-universe.instructions.md. Triggers on: check lore, verify lore,
   fact-check, canon check, lore accuracy, is this correct, seed data accuracy.
 ---
 
@@ -11,7 +11,7 @@ description: >
 
 Use this skill to fact-check any FanHub lore entry, seed data record, character bio, or
 Breaking Bad content claim against the canonical reference document at
-`docs/breaking-bad-universe.md`.
+`.github/instructions/breaking-bad-universe.instructions.md`.
 
 ---
 
@@ -33,7 +33,7 @@ Identify every factual claim in the content under review:
 ## Verification process
 
 1. Read the content to check carefully
-2. Read the relevant sections of `docs/breaking-bad-universe.md`
+2. Read the relevant sections of `.github/instructions/breaking-bad-universe.instructions.md`
 3. For each claim, find the corresponding fact in the reference — or note that it is absent
 4. Flag discrepancies with the exact correct information from the reference
 5. Note any claims the reference cannot confirm or deny (mark as Unverifiable)

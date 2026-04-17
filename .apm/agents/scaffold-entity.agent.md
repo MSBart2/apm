@@ -61,7 +61,7 @@ For a **Quotes** entity specifically, use these defaults:
 - Form fields: Text, Speaker, Context
 - Nav card label: "Quotes"
 - Nav card icon: 💬
-- Seed source: `docs/breaking-bad-universe.md`
+- Seed source: `.github/instructions/breaking-bad-universe.instructions.md`
 
 ### Phase 3 — Full-stack scaffold
 
@@ -151,7 +151,7 @@ Verify the route segment matches the controller's `[Route("api/[controller]")]` 
 After scaffolding, load and apply the **`check-data-accuracy`** skill to verify every seeded record.
 
 - Load the skill file and follow its **Review process** exactly — do not skip steps
-- Cross-check each seeded record against `docs/breaking-bad-universe.md`
+- Cross-check each seeded record against `.github/instructions/breaking-bad-universe.instructions.md`
 - **Required**: query the live DB and live API via MCP tools (`get_quotes`, or equivalent) — the backend started in Phase 3 must be used to verify what the app actually returns
 - For each factual claim (speaker name, quote text, episode context), confirm it matches the canonical source
 - Fix any inaccuracies in `SeedData.cs`, re-run the migration if needed, and re-verify

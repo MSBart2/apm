@@ -264,5 +264,5 @@ Current migrations:
 | [`dotnet/BUGS.md`](dotnet/BUGS.md)                                                   | Full bug catalog with evidence and fix guidance  |
 | [`dotnet/SETUP.md`](dotnet/SETUP.md)                                                 | Detailed setup instructions                      |
 | [`dotnet/docs/FEATURE-CHARACTER-DETAIL.md`](dotnet/docs/FEATURE-CHARACTER-DETAIL.md) | Spec for the next feature to build               |
-| [`docs/breaking-bad-universe.md`](docs/breaking-bad-universe.md)                     | Domain lore: characters, locations, show history |
+| [`breaking-bad-universe.instructions.md`](.github/instructions/breaking-bad-universe.instructions.md) | Domain lore: characters, locations, show history |
 | [`.github/skills/create-card-and-page skill/SKILL.md`](.github/skills/create-card-and-page skill/SKILL.md)   | Skill for scaffolding new entity card pages      |

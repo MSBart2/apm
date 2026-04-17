@@ -36,7 +36,7 @@ ${selection}
 
 1. **Identify the entity type** from the content (lore entry, character bio, episode record, quote, etc.)
 2. **Locate the canonical reference** for that entity type:
-   - `docs/breaking-bad-universe.md` — primary canon source for all Breaking Bad content
+   - `.github/instructions/breaking-bad-universe.instructions.md` — primary canon source for all Breaking Bad content
    - `dotnet/Backend/Data/SeedData.cs` — authoritative seed records
 3. **Query the live database** via MCP tools (see below) to cross-check what is actually in the system
 4. **Query the live API** via MCP tools to verify what the application actually returns
@@ -57,7 +57,7 @@ Call these in order for a complete check:
    - Episodes → `get_episodes`
    - Quotes → `get_quotes`
 2. Cross-check the same entity via the API to verify what the app returns matches the DB
-3. Compare both results against `docs/breaking-bad-universe.md`
+3. Compare both results against `.github/instructions/breaking-bad-universe.instructions.md`
 4. Flag any DB-vs-canon discrepancies
 5. Flag any API-vs-DB discrepancies
 

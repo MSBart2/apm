@@ -22,7 +22,7 @@ If any of the following are not clear from context, ask before proceeding:
 3. **Form fields** — which properties should appear in the add form on the page?
 4. **Nav card label** — plural display label for the homepage (e.g. "Locations", "Lore Facts")
 5. **Nav card icon** — emoji for the homepage nav-card (e.g. 📍, 📖, ⚗️)
-6. **Seed source** — which file to draw seed data from (default: `docs/breaking-bad-universe.md`)
+6. **Seed source** — which file to draw seed data from (default: `.github/instructions/breaking-bad-universe.instructions.md`)
 
 ---
 

@@ -87,7 +87,7 @@ Reload VS Code (or wait a moment for workspace indexing). Ask again:
 - FanHub Breaking Bad fan site with characters, episodes, quotes, lore
 - References team conventions from `.github/copilot-instructions.md`
 
-**Why:** `docs/architecture.md` is now in the workspace. Copilot reads it automatically.
+**Why:** `.github/instructions/architecture.instructions.md` is now in the workspace. Copilot reads it automatically as an instruction file.
 The instructions file gives it layer-specific coding standards before you write a single line.
 
 ---

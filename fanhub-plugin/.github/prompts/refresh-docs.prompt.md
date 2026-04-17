@@ -1,0 +1,1 @@
+/plan Review the current workspace and identify what has changed since the last time ARCHITECTURE.md and .github/copilot-instructions.md were written. Propose specific updates to each file — only the sections that are now inaccurate or missing. Don't rewrite what's still correct.

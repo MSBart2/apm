@@ -1,0 +1,7 @@
+<!-- Add inside <section class="nav-cards"> after the last existing <a class="nav-card"> block -->
+<a href="/{entityname}" class="nav-card">
+    <div class="nav-card-icon">{emoji}</div>
+    <h2>{Card Label}</h2>
+    <p>{One-sentence description of this entity type.}</p>
+    <span class="nav-card-cta">View {Card Label} →</span>
+</a>

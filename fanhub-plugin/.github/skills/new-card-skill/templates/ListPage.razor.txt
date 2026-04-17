@@ -1,0 +1,77 @@
+@page "/{entityname}"
+@rendermode InteractiveServer
+@inject HttpClient Http
+@using Frontend.Models
+
+<PageTitle>{Card Label} - FanHub</PageTitle>
+
+<div class="page-header">
+    <div class="page-header-label">FanHub</div>
+    <h1>{Card Label}</h1>
+</div>
+
+<div class="add-form">
+    <h2>Add New {EntityName}</h2>
+    <form @onsubmit="HandleSubmit" @onsubmit:preventDefault>
+        <!-- Repeat for each form field -->
+        <input @bind="newTitle" placeholder="Title" />
+        <textarea @bind="newDescription" placeholder="Description"></textarea>
+        <button type="submit">Add</button>
+    </form>
+</div>
+
+@if ({entityName}s == null)
+{
+    <p>Loading...</p>
+}
+else
+{
+    <div class="grid">
+        @foreach (var item in {entityName}s)
+        {
+            <div class="card">
+                <!-- Render each property -->
+                <h3>@item.Title</h3>
+                <p>@item.Description</p>
+                <span class="badge">@item.Category</span>
+            </div>
+        }
+    </div>
+}
+
+@code {
+    private List<{EntityName}>? {entityName}s;
+
+    // One bound field per form input
+    private string newTitle = string.Empty;
+    private string newDescription = string.Empty;
+
+    protected override async Task OnInitializedAsync()
+    {
+        {entityName}s = await Http.GetFromJsonAsync<List<{EntityName}>>("api/{entityname}");
+    }
+
+    private async Task HandleSubmit()
+    {
+        var newItem = new {EntityName}
+        {
+            ShowId = 1,
+            Title = newTitle,
+            Description = newDescription,
+            Category = "Custom"  // or bind to a form field if Category is in formFields
+        };
+
+        var response = await Http.PostAsJsonAsync("api/{entityname}", newItem);
+        var created = await response.Content.ReadFromJsonAsync<{EntityName}>();
+
+        if (created != null)
+        {
+            {entityName}s ??= new List<{EntityName}>();
+            {entityName}s.Add(created);
+        }
+
+        newTitle = string.Empty;
+        newDescription = string.Empty;
+        StateHasChanged();
+    }
+}

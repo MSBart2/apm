@@ -1,0 +1,12 @@
+<!-- Add to the @code block -->
+private int {entityName}Count;
+
+<!-- Add inside OnInitializedAsync() -->
+var {entityName}List = await Http.GetFromJsonAsync<List<{EntityName}>>("api/{entityname}");
+{entityName}Count = {entityName}List?.Count ?? 0;
+
+<!-- Add inside <div class="summary-card"> after the last existing stat -->
+<div class="summary-stat">
+    <span class="stat-number">@{entityName}Count</span>
+    <span class="stat-label">{Card Label}</span>
+</div>

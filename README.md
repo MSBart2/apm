@@ -39,10 +39,17 @@ This repo **is** the package — a complete Copilot AI layer for FanHub's `.NET`
 
 ```bash
 # From inside your cloned FanHub repo:
-apm install MSBart2/apm
+apm install MSBart2/apm   # deploys primitives + MCP servers
+apm compile               # generates AGENTS.md + CLAUDE.md from instructions
+apm run install-docs      # copies docs/architecture.md + docs/breaking-bad-universe.md
 ```
 
-This deploys all primitives from `.apm/` into the correct locations in your FanHub repo and writes `apm.lock.yaml` so every developer gets an identical configuration.
+The `install-docs` script must be added to your project's `apm.yml` scripts block once (APM only runs scripts defined locally, not from dependency packages):
+
+```yaml
+scripts:
+  install-docs: "cp apm_modules/MSBart2/apm/docs/architecture.md docs/architecture.md && cp apm_modules/MSBart2/apm/docs/breaking-bad-universe.md docs/breaking-bad-universe.md"
+```
 
 ### What lands in your FanHub repo
 
@@ -65,8 +72,8 @@ fanhub/
 │       ├── scaffold-entity.agent.md
 │       └── plan.agent.md
 ├── docs/
-│   ├── architecture.md              ← module 01, read automatically by Copilot
-│   └── breaking-bad-universe.md     ← lore reference for skills
+│   ├── architecture.md              ← via apm run install-docs (large ref, not compiled)
+│   └── breaking-bad-universe.md     ← via apm run install-docs (large ref, not compiled)
 ├── mcp-servers/
 │   └── fanhub-api-server.js         ← module 05
 └── .vscode/

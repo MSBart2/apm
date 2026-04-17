@@ -9,8 +9,9 @@ author: MSBart2
 license: Apache-2.0
 target: all
 
-scripts:
-  install-docs: "cp ${apm_package_dir}/docs/architecture.md ${project_root}/docs/architecture.md && cp ${apm_package_dir}/docs/breaking-bad-universe.md ${project_root}/docs/breaking-bad-universe.md"
+# scripts are intentionally absent here — apm run only executes scripts from the
+# local project's apm.yml, not from dependency packages. See README for the
+# install-docs script to add to your project.
 
 dependencies:
   mcp:

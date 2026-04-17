@@ -18,7 +18,7 @@ This repo **is** the package — a complete Copilot AI layer for FanHub's `.NET`
 
 | Module | Type                    | What It Adds                                                                                                                                                 |
 | ------ | ----------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| 01     | Repository instructions | `.github/instructions/copilot-instructions.instructions.md` — coding conventions, architecture pointers, and bug-fix guidance scoped to the `dotnet/` track  |
+| 01     | Repository instructions | `.github/copilot-instructions.md` — coding conventions, architecture pointers, and bug-fix guidance scoped to the `dotnet/` track (deployed via `apm run install-docs`) |
 | 01     | Architecture doc        | `docs/architecture.md` — full reference: routes, models, EF Core setup, seed data, conventions, security notes (deployed via `apm run install-docs`)         |
 | 01     | Lore doc                | `docs/breaking-bad-universe.md` — Breaking Bad canon reference for skills and agents (deployed via `apm run install-docs`)                                   |
 | 03     | Prompts (×6)            | `check-data-accuracy`, `good-idea`, `plan-loreCardAndLorePage`, `prompt-to-skill`, `refresh-docs`, `risk-prioritizer`                                        |
@@ -48,7 +48,7 @@ The `install-docs` script must be added to your project's `apm.yml` scripts bloc
 
 ```yaml
 scripts:
-  install-docs: "cp apm_modules/MSBart2/apm/docs/architecture.md docs/architecture.md && cp apm_modules/MSBart2/apm/docs/breaking-bad-universe.md docs/breaking-bad-universe.md"
+  install-docs: "cp apm_modules/MSBart2/apm/docs/architecture.md docs/architecture.md && cp apm_modules/MSBart2/apm/docs/breaking-bad-universe.md docs/breaking-bad-universe.md && cp apm_modules/MSBart2/apm/.apm/instructions/copilot-instructions.instructions.md .github/copilot-instructions.md"
 ```
 
 ### What lands in your FanHub repo
@@ -56,8 +56,7 @@ scripts:
 ```
 fanhub/
 ├── .github/
-│   ├── instructions/
-│   │   └── copilot-instructions.instructions.md  ← module 01 (applyTo: "**")
+│   ├── copilot-instructions.md      ← module 01 (via apm run install-docs)
 │   ├── prompts/                     ← module 03
 │   │   ├── check-data-accuracy.prompt.md
 │   │   ├── good-idea.prompt.md

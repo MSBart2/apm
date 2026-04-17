@@ -9,6 +9,9 @@ author: MSBart2
 license: Apache-2.0
 target: all
 
+scripts:
+  install-docs: "cp ${apm_package_dir}/docs/architecture.md ${project_root}/docs/architecture.md && cp ${apm_package_dir}/docs/breaking-bad-universe.md ${project_root}/docs/breaking-bad-universe.md"
+
 dependencies:
   mcp:
     # Module 05 — FanHub REST API (requires dotnet backend running on :5265)

@@ -19,8 +19,8 @@ This repo **is** the package — a complete Copilot AI layer for FanHub's `.NET`
 | Module | Type                    | What It Adds                                                                                                                                                 |
 | ------ | ----------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | 01     | Repository instructions | `.github/copilot-instructions.md` — coding conventions, architecture pointers, and bug-fix guidance scoped to the `dotnet/` track                            |
-| 01     | Architecture doc        | `.github/instructions/architecture.instructions.md` — full reference: routes, models, EF Core setup, seed data, conventions, security notes                  |
-| 01     | Lore doc                | `.github/instructions/breaking-bad-universe.instructions.md` — Breaking Bad canon reference Copilot draws on for domain-aware suggestions                    |
+| 01     | Architecture doc        | `docs/architecture.md` — full reference: routes, models, EF Core setup, seed data, conventions, security notes (deployed via `apm run install-docs`)          |
+| 01     | Lore doc                | `docs/breaking-bad-universe.md` — Breaking Bad canon reference for skills and agents (deployed via `apm run install-docs`)                                    |
 | 03     | Prompts (×6)            | `check-data-accuracy`, `good-idea`, `plan-loreCardAndLorePage`, `prompt-to-skill`, `refresh-docs`, `risk-prioritizer`                                        |
 | 04     | Skills (×3)             | `check-data-accuracy`, `lore-accuracy-check`, `new-card-skill` (includes scripts + templates)                                                                |
 | 05     | MCP server              | `mcp-servers/fanhub-api-server.js` — exposes FanHub's REST API to Copilot Chat; `.vscode/mcp.json` wires it up alongside `mcp-sqlite` pointed at `fanhub.db` |

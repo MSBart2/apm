@@ -1,6 +1,6 @@
 ## Plan: Lore Card + `/lore` Page
 
-Add a "Lore Facts" stat and nav-card to the homepage, backed by a new `Lore` entity seeded from `.github/instructions/breaking-bad-universe.instructions.md`. The `/lore` page displays lore in a card grid with an inline add form.
+Add a "Lore Facts" stat and nav-card to the homepage, backed by a new `Lore` entity seeded from `docs/breaking-bad-universe.md`. The `/lore` page displays lore in a card grid with an inline add form.
 
 ---
 
@@ -18,7 +18,7 @@ Add a "Lore Facts" stat and nav-card to the homepage, backed by a new `Lore` ent
 **3. Add seed data** — `dotnet/Backend/Data/SeedData.cs`
 
 - ⚠️ The existing `if (context.Shows.Any()) return;` early-exits before any new code — the Lore seed block must be placed **before** that `return`, with its own guard: `if (!context.Lores.Any()) { /* seed lore */ }`
-- Seed ~12–15 facts from `.github/instructions/breaking-bad-universe.instructions.md` across 5 categories: Location, Faction, Theme, Story Beat, Production — all with `ShowId = show.Id` (fetched via `context.Shows.First()`)
+- Seed ~12–15 facts from `docs/breaking-bad-universe.md` across 5 categories: Location, Faction, Theme, Story Beat, Production — all with `ShowId = show.Id` (fetched via `context.Shows.First()`)
 
 **4. Run EF migration** _(developer step, not a code change)_
 

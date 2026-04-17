@@ -82,6 +82,7 @@ Reload VS Code (or wait a moment for workspace indexing). Ask again:
 > **"What is this codebase? What tech stack does it use?"**
 
 👉 Copilot now answers accurately:
+
 - ASP.NET Core 10 Web API backend + Blazor Server frontend
 - SQLite via Entity Framework Core 10
 - FanHub Breaking Bad fan site with characters, episodes, quotes, lore
@@ -106,9 +107,9 @@ This is `package-lock.json` for your AI layer.
 
 ## Step 5 — The pivot
 
-> *"We installed everything in one command. For the next five modules, we're going to
+> _"We installed everything in one command. For the next five modules, we're going to
 > build every single piece of this — so when you ship your own plugin for your own
-> codebase, you understand exactly what you're distributing."*
+> codebase, you understand exactly what you're distributing."_
 
 Open `.github/copilot-instructions.md`. That's Module 01. Let's start there.
 
@@ -119,10 +120,12 @@ Open `.github/copilot-instructions.md`. That's Module 01. Let's start there.
 **MCP server caveat:**
 `apm install` copies `mcp-servers/fanhub-api-server.js` and wires `.vscode/mcp.json`,
 but the server needs the backend running first:
+
 ```bash
 cd dotnet/Backend && dotnet run   # must be running
 node mcp-servers/fanhub-api-server.js
 ```
+
 Don't demo live MCP calls here — save that for Module 05.
 
 **Local path for demo:**
@@ -135,6 +138,6 @@ If Copilot doesn't immediately reflect the architecture context, close and reope
 workspace. VS Code re-indexes on open.
 
 **What NOT to explain here:**
-Don't walk through what each file does. The power of this moment is the *quantity* —
+Don't walk through what each file does. The power of this moment is the _quantity_ —
 6 prompts, 3 skills with templates, 2 agents, an MCP server, an architecture doc — all
 as a coherent unit. The understanding comes from building them one at a time in the modules.

@@ -16,15 +16,15 @@ Use it to:
 
 This repo **is** the package — a complete Copilot AI layer for FanHub's `.NET` track (ASP.NET Core + Blazor + SQLite).
 
-| Module | Type                    | What It Adds                                                                                                                                                 |
-| ------ | ----------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Module | Type                    | What It Adds                                                                                                                                                            |
+| ------ | ----------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | 01     | Repository instructions | `.github/copilot-instructions.md` — coding conventions, architecture pointers, and bug-fix guidance scoped to the `dotnet/` track (deployed via `apm run install-docs`) |
-| 01     | Architecture doc        | `docs/architecture.md` — full reference: routes, models, EF Core setup, seed data, conventions, security notes (deployed via `apm run install-docs`)         |
-| 01     | Lore doc                | `docs/breaking-bad-universe.md` — Breaking Bad canon reference for skills and agents (deployed via `apm run install-docs`)                                   |
-| 03     | Prompts (×6)            | `check-data-accuracy`, `good-idea`, `plan-loreCardAndLorePage`, `prompt-to-skill`, `refresh-docs`, `risk-prioritizer`                                        |
-| 04     | Skills (×3)             | `check-data-accuracy`, `lore-accuracy-check`, `new-card-skill` (includes scripts + templates)                                                                |
-| 05     | MCP server              | `mcp-servers/fanhub-api-server.js` — exposes FanHub's REST API to Copilot Chat; `.vscode/mcp.json` wires it up alongside `mcp-sqlite` pointed at `fanhub.db` |
-| 06     | Agents (×2)             | `scaffold-entity.agent.md`, `plan.agent.md`                                                                                                                  |
+| 01     | Architecture doc        | `docs/architecture.md` — full reference: routes, models, EF Core setup, seed data, conventions, security notes (deployed via `apm run install-docs`)                    |
+| 01     | Lore doc                | `docs/breaking-bad-universe.md` — Breaking Bad canon reference for skills and agents (deployed via `apm run install-docs`)                                              |
+| 03     | Prompts (×6)            | `check-data-accuracy`, `good-idea`, `plan-loreCardAndLorePage`, `prompt-to-skill`, `refresh-docs`, `risk-prioritizer`                                                   |
+| 04     | Skills (×3)             | `check-data-accuracy`, `lore-accuracy-check`, `new-card-skill` (includes scripts + templates)                                                                           |
+| 05     | MCP server              | `mcp-servers/fanhub-api-server.js` — exposes FanHub's REST API to Copilot Chat; `.vscode/mcp.json` wires it up alongside `mcp-sqlite` pointed at `fanhub.db`            |
+| 06     | Agents (×2)             | `scaffold-entity.agent.md`, `plan.agent.md`                                                                                                                             |
 
 ## Installation
 
@@ -48,7 +48,7 @@ The `install-docs` script must be added to your project's `apm.yml` scripts bloc
 
 ```yaml
 scripts:
-  install-docs: "powershell -Command \"New-Item -ItemType Directory -Force docs | Out-Null; New-Item -ItemType Directory -Force .github | Out-Null; Invoke-WebRequest https://raw.githubusercontent.com/MSBart2/apm/main/docs/architecture.md -OutFile docs/architecture.md; Invoke-WebRequest https://raw.githubusercontent.com/MSBart2/apm/main/docs/breaking-bad-universe.md -OutFile docs/breaking-bad-universe.md; Invoke-WebRequest https://raw.githubusercontent.com/MSBart2/apm/main/.apm/instructions/copilot-instructions.instructions.md -OutFile .github/copilot-instructions.md\""
+  install-docs: curl -fsSL --create-dirs -o docs/architecture.md https://raw.githubusercontent.com/MSBart2/apm/main/docs/architecture.md && curl -fsSL --create-dirs -o docs/breaking-bad-universe.md https://raw.githubusercontent.com/MSBart2/apm/main/docs/breaking-bad-universe.md && curl -fsSL --create-dirs -o .github/copilot-instructions.md https://raw.githubusercontent.com/MSBart2/apm/main/.apm/instructions/copilot-instructions.instructions.md
 ```
 
 ### What lands in your FanHub repo

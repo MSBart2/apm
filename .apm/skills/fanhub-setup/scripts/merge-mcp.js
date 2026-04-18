@@ -13,10 +13,11 @@ const fs = require("fs");
 const path = require("path");
 
 // Find mcp-servers.json in the APM package root
-// This script runs from .github/skills/fanhub-setup/, so we go up to project root,
+// This script runs from .github/skills/fanhub-setup/scripts/, so we go up to project root,
 // then into apm_modules/MSBart2/apm/
 const packageRoot = path.join(
   __dirname,
+  "..",
   "..",
   "..",
   "..",

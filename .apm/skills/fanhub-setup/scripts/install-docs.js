@@ -7,23 +7,33 @@
  * This script is part of the FanHub setup skill. It copies FanHub documentation
  * from the APM package into your project's fanhubdocs/ directory at the repo root.
  *
- * Copies all .md files from apm_modules/MSBart2/apm/fanhubdocs/ to fanhubdocs/
+ * Copies all .md files from the package's fanhubdocs/ to the consumer repo's fanhubdocs/
  */
 
 const fs = require("fs");
 const path = require("path");
+const { execSync } = require("child_process");
 
-// Paths
-const packageRoot = path.join(
-  __dirname,
-  "..",
-  "..",
-  "..",
-  "..",
-  "apm_modules",
-  "MSBart2",
-  "apm",
-);
+// Get the package root from npm/apm context
+let packageRoot;
+try {
+  // When installed via apm, the skill is at .github/skills/fanhub-setup/
+  // and we can find the package by looking up to apm_modules
+  packageRoot = path.join(
+    __dirname,
+    "..",
+    "..",
+    "..",
+    "..",
+    "apm_modules",
+    "MSBart2",
+    "apm",
+  );
+} catch (e) {
+  console.error("Error determining package root");
+  process.exit(1);
+}
+
 const srcDocsDir = path.join(packageRoot, "fanhubdocs");
 const destDocsDir = path.join(process.cwd(), "fanhubdocs");
 

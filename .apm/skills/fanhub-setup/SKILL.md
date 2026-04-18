@@ -89,16 +89,16 @@ node .github/skills/fanhub-setup/scripts/merge-mcp.js
 **Verify and fix**:
 
 ```bash
-# Verify package installed
-ls apm_modules/MSBart2/apm/fanhubdocs/
+# Verify APM package is installed
+ls apm_modules/MSBart2/apm/
 
 # Try manual run
-node .github/skills/fanhub-setup/install-docs.js
+node .github/skills/fanhub-setup/scripts/install-docs.js
 ```
 
 ### Docs don't show in Copilot
 
-Documents are installed to `.github/docs/fanhub/` but Copilot may need a reload. Try restarting VS Code or explicitly referencing the docs in your instructions.
+Documents are installed to `fanhubdocs/` at the repo root but Copilot may need a reload. Try restarting VS Code or explicitly referencing the docs in your instructions.
 
 ## How It Works
 

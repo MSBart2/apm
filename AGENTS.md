@@ -6,9 +6,9 @@ This repo is an [Agent Package Manager](https://microsoft.github.io/apm/) (APM) 
 
 APM is a package manager that distributes Copilot customization files into target repositories. When you run `apm install MSBart2/apm` in a FanHub fork:
 
-1. APM clones this repo into `apm_modules/MSBart2/apm/`
+1. APM clones this repo to your local cache
 2. APM discovers and deploys all files in `.apm/` subdirectories to the target repo
-3. Scripts (if distributed) can be called with `apm run <script-name>`
+3. Scripts are part of the skill package and can be run directly with Node.js
 
 ## Codebase Structure
 
@@ -68,7 +68,7 @@ The `.apm/skills/fanhub-setup/` directory contains two critical scripts:
 
 **How it works**:
 
-1. Reads `mcp-servers.json` (all FanHub MCP server definitions)
+1. Reads `mcp-servers.json` from the deployed skill
 2. Reads existing `.vscode/mcp.json` (if exists)
 3. Merges FanHub servers using `Object.assign()` (preserves pre-existing servers)
 4. Writes merged config back
@@ -83,7 +83,7 @@ The `.apm/skills/fanhub-setup/` directory contains two critical scripts:
 
 **How it works**:
 
-1. Reads documentation files from `apm_modules/MSBart2/apm/fanhubdocs/`
+1. Reads documentation files from the deployed skill package
 2. Creates `.github/docs/fanhub/` directory
 3. Copies all documentation files for Copilot context
 

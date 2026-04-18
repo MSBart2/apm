@@ -23,7 +23,7 @@ This repo **is** the package — a complete Copilot AI layer for FanHub's all fo
 | 01     | Lore doc                | `fanhubapm/breaking-bad-universe.md` — Breaking Bad canon reference for skills and agents (deployed via `apm run install-docs`)                           |
 | 03     | Prompts (×6)            | `check-data-accuracy`, `good-idea`, `plan-loreCardAndLorePage`, `prompt-to-skill`, `refresh-docs`, `risk-prioritizer`                                     |
 | 04     | Skills (×3)             | `check-data-accuracy`, `lore-accuracy-check`, `new-card-skill` (includes scripts + templates)                                                             |
-| 05     | MCP servers             | `fanhub-api-server.js` — REST API (all tracks); `mcp-sqlite` database access for all 4 language tracks (Node.js, .NET, Java, Go) via `.vscode/mcp.json`   |
+| 05     | MCP servers             | `scripts/merge-mcp.js` — Safe merge of FanHub MCP servers (fanhub-api, language-track SQLite) via `apm run setup-mcp` |
 | 06     | Agents (×2)             | `scaffold-entity.agent.md`, `plan.agent.md`                                                                                                               |
 
 ## Installation
@@ -39,12 +39,13 @@ This repo **is** the package — a complete Copilot AI layer for FanHub's all fo
 
 ```bash
 # From inside your cloned FanHub repo:
-apm install MSBart2/apm   # deploys primitives + instructions + MCP servers
-apm run install-docs      # downloads architecture.md + breaking-bad-universe.md docs
-apm compile               # generates AGENTS.md from instructions
+apm install MSBart2/apm        # deploys primitives + instructions
+apm run install-docs           # downloads architecture.md + breaking-bad-universe.md docs
+apm run setup-mcp              # merges FanHub MCP servers into .vscode/mcp.json
+apm compile                    # generates AGENTS.md from instructions
 ```
 
-When you install `MSBart2/apm`, the package automatically deploys instructions via APM's `.apm/instructions/` mechanism. The `install-docs` script downloads supplementary documentation only.
+The `setup-mcp` script safely merges FanHub's MCP server definitions into your existing `.vscode/mcp.json` without overwriting pre-existing servers. See [mcp-servers.json](mcp-servers.json) for the included servers.
 
 ### Uninstall
 
@@ -95,9 +96,13 @@ fanhub/
 
 ### After install — start MCP servers
 
-To use MCP servers, start the backend for your language track. For example, `.NET`:
+To use MCP servers, first run the setup script to configure them, then start the backend for your language track:
 
 ```bash
+# One-time setup after apm install
+apm run setup-mcp
+
+# Then for any language track, e.g. .NET:
 # Terminal 1 — FanHub backend (.NET track)
 cd dotnet/Backend && dotnet run
 
@@ -105,10 +110,7 @@ cd dotnet/Backend && dotnet run
 node mcp-servers/fanhub-api-server.js
 ```
 
-`.vscode/mcp.json` auto-wires:
-
-- `fanhub-api-server.js` — REST API access (all tracks)
-- `mcp-sqlite` — Direct database queries for whichever track you're using (Node.js, .NET, Java, or Go)
+The `setup-mcp` script safely merges FanHub's MCP server definitions into your `.vscode/mcp.json` without overwriting any pre-existing servers.
 
 ## Workshop Demo (5-minute reveal)
 

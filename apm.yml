@@ -2,7 +2,7 @@ name: fanhub-workshop
 version: 1.0.0
 description: >
   Complete GitHub Copilot configuration for the FanHub Breaking Bad workshop.
-  Includes instructions, prompts, skills, agents, and MCP servers across modules 01–06.
+  Includes instructions, prompts, skills, agents, and MCP server setup across modules 01–06.
   Install into a freshly-cloned FanHub repo to get everything participants
   build from scratch — delivered in one command.
 author: MSBart2
@@ -11,36 +11,9 @@ target: all
 
 scripts:
   install-docs: "curl -fsSL --create-dirs -o fanhubapm/architecture.md https://raw.githubusercontent.com/MSBart2/apm/main/fanhubapm/architecture.md && curl -fsSL --create-dirs -o fanhubapm/breaking-bad-universe.md https://raw.githubusercontent.com/MSBart2/apm/main/fanhubapm/breaking-bad-universe.md"
+  setup-mcp: "node ${workspaceFolder}/apm_modules/MSBart2/apm/scripts/merge-mcp.js"
   uninstall-docs: 'node -e "const fs = require(\'fs\'); [\'fanhubapm/architecture.md\',\'fanhubapm/breaking-bad-universe.md\'].forEach(f => { try { fs.unlinkSync(f); } catch(e) {} })"'
 
 dependencies:
-  mcp:
-    # Module 05 — FanHub REST API (requires backend running on :5265)
-    - name: fanhub-api
-      registry: false
-      transport: stdio
-      command: node
-      args: ["${workspaceFolder}/mcp-servers/fanhub-api-server.js"]
-      env:
-        FANHUB_API_URL: "http://localhost:5265"
-    # Module 05 — Direct SQLite access via fanhub.db
-    - name: fanhub-db-dotnet
-      registry: false
-      transport: stdio
-      command: npx
-      args: ["-y", "mcp-sqlite", "${workspaceFolder}/dotnet/Backend/fanhub.db"]
-    - name: fanhub-db-node
-      registry: false
-      transport: stdio
-      command: npx
-      args: ["-y", "mcp-sqlite", "${workspaceFolder}/node/Backend/fanhub.db"]
-    - name: fanhub-db-java
-      registry: false
-      transport: stdio
-      command: npx
-      args: ["-y", "mcp-sqlite", "${workspaceFolder}/java/Backend/fanhub.db"]
-    - name: fanhub-go
-      registry: false
-      transport: stdio
-      command: npx
-      args: ["-y", "mcp-sqlite", "${workspaceFolder}/go/Backend/fanhub.db"]
+  apm: []
+  mcp: []

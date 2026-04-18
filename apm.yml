@@ -10,9 +10,9 @@ license: Apache-2.0
 target: all
 
 scripts:
-  install-docs: "curl -fsSL --create-dirs -o fanhubapm/architecture.md https://raw.githubusercontent.com/MSBart2/apm/main/fanhubapm/architecture.md && curl -fsSL --create-dirs -o fanhubapm/breaking-bad-universe.md https://raw.githubusercontent.com/MSBart2/apm/main/fanhubapm/breaking-bad-universe.md"
-  setup-mcp: "node ${workspaceFolder}/apm_modules/MSBart2/apm/scripts/merge-mcp.js"
-  uninstall-docs: 'node -e "const fs=require(''fs'');[''fanhubapm/architecture.md'',''fanhubapm/breaking-bad-universe.md''].forEach(f=>{try{fs.unlinkSync(f)}catch(e){}})"'
+  setup-mcp: "node ${workspaceFolder}/.github/skills/fanhub-setup/merge-mcp.js"
+  install-docs: "node ${workspaceFolder}/.github/skills/fanhub-setup/install-docs.js"
+  uninstall-docs: 'node -e "const fs=require(''fs'');const p=require(''path'');[p.join(process.cwd(),''.github/docs/fanhub'')].forEach(d=>{try{require(''child_process'').execSync(''rm -rf ''+d)}catch(e){}});"'
 
 dependencies:
   apm: []

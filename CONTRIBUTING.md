@@ -11,9 +11,12 @@ This repo holds Copilot customization assets for the [FanHub](https://github.com
 - Custom instructions (`.github/instructions/*.instructions.md`)
 - Agent skills
 - MCP server configurations
+- Utility scripts (Node.js, cross-platform only)
 - VS Code settings snippets relevant to Copilot
 
 If it helps Copilot work better inside FanHub, it probably belongs here.
+
+**Important**: Only `.apm/{instructions,prompts,skills,agents}/` files are auto-deployed by APM. Other files like scripts must be distributed manually or referenced via `apm_modules/` paths. See [AGENTS.md](AGENTS.md) for details.
 
 ## Getting Started
 

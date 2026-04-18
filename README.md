@@ -49,24 +49,26 @@ The `install-docs` script must be added to your project's `apm.yml` scripts bloc
 ```yaml
 scripts:
   install-docs: curl -fsSL --create-dirs -o dotnet/docs/architecture.md https://raw.githubusercontent.com/MSBart2/apm/main/docs/architecture.md && curl -fsSL --create-dirs -o dotnet/docs/breaking-bad-universe.md https://raw.githubusercontent.com/MSBart2/apm/main/docs/breaking-bad-universe.md && curl -fsSL --create-dirs -o .github/copilot-instructions.md https://raw.githubusercontent.com/MSBart2/apm/main/.apm/instructions/copilot-instructions.instructions.md
-  uninstall-docs: pwsh -NoProfile -Command "Remove-Item -Recurse -Force -ErrorAction SilentlyContinue 'AGENTS.md','.github/prompts','.github/agents','.github/skills','dotnet/docs/architecture.md','dotnet/docs/breaking-bad-universe.md','.github/copilot-instructions.md'"
+  uninstall-docs: pwsh -NoProfile -Command "Remove-Item -Force -ErrorAction SilentlyContinue 'dotnet/docs/architecture.md','dotnet/docs/breaking-bad-universe.md','.github/copilot-instructions.md'"
 ```
 
 ### Uninstall
 
-To completely remove the APM package and all generated files:
+To completely remove the APM package and all its generated/downloaded files:
 
 ```bash
-apm uninstall MSBart2/apm
-apm run uninstall-docs
-apm compile --clean
+apm uninstall MSBart2/apm    # removes prompts, agents, skills, instructions from .github/
+apm run uninstall-docs       # removes downloaded docs (architecture.md, breaking-bad-universe.md, copilot-instructions.md)
+apm compile --clean          # removes orphaned AGENTS.md and CLAUDE.md
 ```
 
-This removes:
-- All installed primitives (instructions, prompts, skills, agents)
-- All integrated prompt/agent/skill files from `.github/`
-- Downloaded documentation files from `dotnet/docs/`
-- Generated `AGENTS.md` and `CLAUDE.md` files
+This removes only what APM added:
+
+- Integrated prompt/agent/skill/instruction files from `.github/`
+- Downloaded documentation files from `dotnet/docs/` and `.github/`
+- Compiled `AGENTS.md` and `CLAUDE.md` files
+
+Pre-existing files in your repo are preserved.
 
 ### What lands in your FanHub repo
 

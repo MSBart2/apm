@@ -39,12 +39,12 @@ This repo **is** the package — a complete Copilot AI layer for FanHub's all fo
 
 ```bash
 # From inside your cloned FanHub repo:
-apm install MSBart2/apm   # deploys primitives + MCP servers + scripts
-apm run install-docs      # downloads architecture.md + breaking-bad-universe.md + copilot-instructions.md
-apm compile               # generates AGENTS.md + CLAUDE.md from instructions
+apm install MSBart2/apm   # deploys primitives + instructions + MCP servers
+apm run install-docs      # downloads architecture.md + breaking-bad-universe.md docs
+apm compile               # generates AGENTS.md from instructions
 ```
 
-When you install `MSBart2/apm`, the package includes the `install-docs` and `uninstall-docs` scripts in its own `apm.yml`. APM automatically merges these into your project's `apm.yml` during the install step, so they're immediately available to run.
+When you install `MSBart2/apm`, the package automatically deploys instructions via APM's `.apm/instructions/` mechanism. The `install-docs` script downloads supplementary documentation only.
 
 ### Uninstall
 
@@ -52,14 +52,14 @@ To completely remove the APM package and all its generated/downloaded files:
 
 ```bash
 apm uninstall MSBart2/apm    # removes prompts, agents, skills, instructions from .github/
-apm run uninstall-docs       # removes downloaded docs (architecture.md, breaking-bad-universe.md, copilot-instructions.md)
+apm run uninstall-docs       # removes downloaded docs (architecture.md, breaking-bad-universe.md)
 apm compile --clean          # removes orphaned AGENTS.md and CLAUDE.md
 ```
 
 This removes only what APM added:
 
-- Integrated prompt/agent/skill/instruction files from `.github/`
-- Downloaded documentation files from `fanhubapm/` and `.github/`
+- Integrated prompt/agent/skill/instruction files from `.github/` (handled by `apm uninstall`)
+- Downloaded documentation files from `fanhubapm/`
 - Compiled `AGENTS.md` and `CLAUDE.md` files
 
 Pre-existing files in your repo are preserved.

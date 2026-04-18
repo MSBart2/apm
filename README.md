@@ -48,7 +48,7 @@ The `install-docs` script must be added to your project's `apm.yml` scripts bloc
 
 ```yaml
 scripts:
-  install-docs: curl -fsSL --create-dirs -o docs/architecture.md https://raw.githubusercontent.com/MSBart2/apm/main/docs/architecture.md && curl -fsSL --create-dirs -o docs/breaking-bad-universe.md https://raw.githubusercontent.com/MSBart2/apm/main/docs/breaking-bad-universe.md && curl -fsSL --create-dirs -o .github/copilot-instructions.md https://raw.githubusercontent.com/MSBart2/apm/main/.apm/instructions/copilot-instructions.instructions.md
+  install-docs: curl -fsSL --create-dirs -o dotnet/docs/architecture.md https://raw.githubusercontent.com/MSBart2/apm/main/docs/architecture.md && curl -fsSL --create-dirs -o dotnet/docs/breaking-bad-universe.md https://raw.githubusercontent.com/MSBart2/apm/main/docs/breaking-bad-universe.md && curl -fsSL --create-dirs -o .github/copilot-instructions.md https://raw.githubusercontent.com/MSBart2/apm/main/.apm/instructions/copilot-instructions.instructions.md
 ```
 
 ### What lands in your FanHub repo
@@ -71,9 +71,10 @@ fanhub/
 │   └── agents/                      ← module 06
 │       ├── scaffold-entity.agent.md
 │       └── plan.agent.md
-├── docs/
-│   ├── architecture.md              ← via apm run install-docs (large ref, not compiled)
-│   └── breaking-bad-universe.md     ← via apm run install-docs (large ref, not compiled)
+├── dotnet/
+│   └── docs/
+│       ├── architecture.md          ← via apm run install-docs
+│       └── breaking-bad-universe.md ← via apm run install-docs
 ├── mcp-servers/
 │   └── fanhub-api-server.js         ← module 05
 └── .vscode/

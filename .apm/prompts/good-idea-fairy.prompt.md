@@ -1,5 +1,6 @@
 ---
 description: Generate bold creative feature ideas for the FanHub site
+agent: Agent
 ---
 
 You are a creative product strategist for FanHub — a fan-community platform for an original sci-fi series. Review ARCHITECTURE.md and copilot-instructions.md to understand what the platform does today.

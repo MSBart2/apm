@@ -1,5 +1,5 @@
 ---
-applyTo: "**"
+description: FanHub workshop codebase instructions for fixing bugs with Copilot
 ---
 
 # FanHub Copilot Instructions
@@ -20,7 +20,7 @@ FanHub is a Breaking Bad fan site. It serves characters, episodes, quotes, lore,
 
 Other language implementations (`node/`, `go/`, `java/`) exist but are **not the focus**.
 
-> For deep implementation details — routes, models, conventions, EF setup, seed data, configuration, and security notes — see [`architecture.md`](../architecture.md).
+> For deep implementation details — routes, models, conventions, EF setup, seed data, configuration, and security notes — see [`architecture.md`](../dotnet/docs/architecture.md).
 
 ---
 
@@ -38,8 +38,8 @@ Other language implementations (`node/`, `go/`, `java/`) exist but are **not the
 
 | Document                                                                                | Purpose                                                              |
 | --------------------------------------------------------------------------------------- | -------------------------------------------------------------------- |
-| [`architecture.md`](../architecture.md)                                                 | Full architecture: routes, models, EF, conventions, config, security |
+| [`architecture.md`](../dotnet/docs/architecture.md)                                     | Full architecture: routes, models, EF, conventions, config, security |
 | [`dotnet/BUGS.md`](../dotnet/BUGS.md)                                                   | Bug catalog with evidence and fix guidance                           |
 | [`dotnet/SETUP.md`](../dotnet/SETUP.md)                                                 | Detailed setup instructions                                          |
 | [`dotnet/docs/FEATURE-CHARACTER-DETAIL.md`](../dotnet/docs/FEATURE-CHARACTER-DETAIL.md) | Spec for the next feature to build                                   |
-| [`docs/breaking-bad-universe.md`](../docs/breaking-bad-universe.md)                     | Domain lore: characters, locations, show history                     |
+| [`docs/breaking-bad-universe.md`](../dotnet/docs/breaking-bad-universe.md)              | Domain lore: characters, locations, show history                     |

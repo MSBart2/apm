@@ -1,5 +1,5 @@
 ---
-name: scaffold-entity
+name: content-author
 description: >
   Scaffolds a new entity type (e.g. Quotes, Locations, Factions) into FanHub
   with a full-stack implementation: backend model, DbContext registration, seed data,

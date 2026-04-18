@@ -21,7 +21,7 @@ FanHub is a Breaking Bad fan site. It serves characters, episodes, quotes, lore,
 
 Other language implementations (`node/`, `go/`, `java/`) exist but are **not the focus**.
 
-> For deep implementation details — routes, models, conventions, EF setup, seed data, configuration, and security notes — see [`architecture.md`](../dotnet/docs/architecture.md).
+> For deep implementation details — routes, models, conventions, EF setup, seed data, configuration, and security notes — see [`architecture.md`](../fanhubdocs/architecture.md).
 
 ---
 
@@ -37,10 +37,9 @@ Other language implementations (`node/`, `go/`, `java/`) exist but are **not the
 
 ## Reference Docs
 
-| Document                                                                                  | Purpose                                                              |
-| ----------------------------------------------------------------------------------------- | -------------------------------------------------------------------- |
-| [`architecture.md`](../fanhubapm/docs/architecture.md)                                    | Full architecture: routes, models, EF, conventions, config, security |
-| [`dotnet/BUGS.md`](../dotnet/BUGS.md)                                                     | Bug catalog with evidence and fix guidance                           |
-| [`dotnet/SETUP.md`](../dotnet/SETUP.md)                                                   | Detailed setup instructions                                          |
-| [`fanhubapm//FEATURE-CHARACTER-DETAIL.md`](../fanhubapm/docs/FEATURE-CHARACTER-DETAIL.md) | Spec for the next feature to build                                   |
-| [`fanhubapm//breaking-bad-universe.md`](../fanhubapm//docs/breaking-bad-universe.md)      | Domain lore: characters, locations, show history                     |
+| Document                                                                        | Purpose                                                              |
+| ------------------------------------------------------------------------------- | -------------------------------------------------------------------- |
+| [`architecture.md`](../fanhubdocs/architecture.md)                              | Full architecture: routes, models, EF, conventions, config, security |
+| [`dotnet/BUGS.md`](../dotnet/BUGS.md)                                           | Bug catalog with evidence and fix guidance                           |
+| [`dotnet/SETUP.md`](../dotnet/SETUP.md)                                         | Detailed setup instructions                                          |
+| [`fanhubdocs/breaking-bad-universe.md`](../fanhubdocs/breaking-bad-universe.md) | Domain lore: characters, locations, show history                     |

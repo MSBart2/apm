@@ -39,18 +39,12 @@ This repo **is** the package — a complete Copilot AI layer for FanHub's `.NET`
 
 ```bash
 # From inside your cloned FanHub repo:
-apm install MSBart2/apm   # deploys primitives + MCP servers
+apm install MSBart2/apm   # deploys primitives + MCP servers + scripts
 apm run install-docs      # downloads architecture.md + breaking-bad-universe.md + copilot-instructions.md
-apm compile               # generates AGENTS.md + CLAUDE.md from instructions (no warnings now)
+apm compile               # generates AGENTS.md + CLAUDE.md from instructions
 ```
 
-The `install-docs` script must be added to your project's `apm.yml` scripts block once (APM only runs scripts defined locally, not from dependency packages):
-
-```yaml
-scripts:
-  install-docs: curl -fsSL --create-dirs -o dotnet/docs/architecture.md https://raw.githubusercontent.com/MSBart2/apm/main/docs/architecture.md && curl -fsSL --create-dirs -o dotnet/docs/breaking-bad-universe.md https://raw.githubusercontent.com/MSBart2/apm/main/docs/breaking-bad-universe.md && curl -fsSL --create-dirs -o .github/copilot-instructions.md https://raw.githubusercontent.com/MSBart2/apm/main/.apm/instructions/copilot-instructions.instructions.md
-  uninstall-docs: pwsh -NoProfile -Command "Remove-Item -Force -ErrorAction SilentlyContinue 'dotnet/docs/architecture.md','dotnet/docs/breaking-bad-universe.md','.github/copilot-instructions.md'"
-```
+When you install `MSBart2/apm`, the package includes the `install-docs` and `uninstall-docs` scripts in its own `apm.yml`. APM automatically merges these into your project's `apm.yml` during the install step, so they're immediately available to run.
 
 ### Uninstall
 

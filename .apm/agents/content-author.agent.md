@@ -138,7 +138,7 @@ Verify the route segment matches the controller's `[Route("api/[controller]")]` 
 
 10. Build and run — execute these commands from `dotnet/` in sequence:
     ```
-    dotnet build FanHub-1.sln
+    dotnet build FanHub.sln
     ```
     Confirm the build succeeds with zero errors before continuing. Then start the backend so the live API is reachable for the accuracy check in Phase 4:
     ```

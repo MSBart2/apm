@@ -14,16 +14,16 @@ Use it to:
 
 ## What's Included
 
-This repo **is** the package — a complete Copilot AI layer for FanHub's `.NET` track (ASP.NET Core + Blazor + SQLite).
+This repo **is** the package — a complete Copilot AI layer for FanHub's all four language tracks (Node.js, `.NET`, Java, Go). Includes shared instructions, prompts, skills, agents, REST API access, and database connectivity via MCP servers.
 
 | Module | Type                    | What It Adds                                                                                                                                                            |
 | ------ | ----------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 01     | Repository instructions | `.github/copilot-instructions.md` — coding conventions, architecture pointers, and bug-fix guidance scoped to the `dotnet/` track (deployed via `apm run install-docs`) |
-| 01     | Architecture doc        | `docs/architecture.md` — full reference: routes, models, EF Core setup, seed data, conventions, security notes (deployed via `apm run install-docs`)                    |
-| 01     | Lore doc                | `docs/breaking-bad-universe.md` — Breaking Bad canon reference for skills and agents (deployed via `apm run install-docs`)                                              |
+| 01     | Repository instructions | `.github/copilot-instructions.md` — coding conventions, architecture pointers, and bug-fix guidance for FanHub (deployed via `apm run install-docs`) |
+| 01     | Architecture doc        | `fanhubapm/architecture.md` — full reference: routes, models, EF Core setup, seed data, conventions, security notes (deployed via `apm run install-docs`)               |
+| 01     | Lore doc                | `fanhubapm/breaking-bad-universe.md` — Breaking Bad canon reference for skills and agents (deployed via `apm run install-docs`)                                         |
 | 03     | Prompts (×6)            | `check-data-accuracy`, `good-idea`, `plan-loreCardAndLorePage`, `prompt-to-skill`, `refresh-docs`, `risk-prioritizer`                                                   |
 | 04     | Skills (×3)             | `check-data-accuracy`, `lore-accuracy-check`, `new-card-skill` (includes scripts + templates)                                                                           |
-| 05     | MCP server              | `mcp-servers/fanhub-api-server.js` — exposes FanHub's REST API to Copilot Chat; `.vscode/mcp.json` wires it up alongside `mcp-sqlite` pointed at `fanhub.db`            |
+| 05     | MCP servers             | `fanhub-api-server.js` — REST API (all tracks); `mcp-sqlite` database access for all 4 language tracks (Node.js, .NET, Java, Go) via `.vscode/mcp.json`              |
 | 06     | Agents (×2)             | `scaffold-entity.agent.md`, `plan.agent.md`                                                                                                                             |
 
 ## Installation
@@ -59,7 +59,7 @@ apm compile --clean          # removes orphaned AGENTS.md and CLAUDE.md
 This removes only what APM added:
 
 - Integrated prompt/agent/skill/instruction files from `.github/`
-- Downloaded documentation files from `dotnet/docs/` and `.github/`
+- Downloaded documentation files from `fanhubapm/` and `.github/`
 - Compiled `AGENTS.md` and `CLAUDE.md` files
 
 Pre-existing files in your repo are preserved.
@@ -84,29 +84,30 @@ fanhub/
 │   └── agents/                      ← module 06
 │       ├── scaffold-entity.agent.md
 │       └── plan.agent.md
-├── dotnet/
-│   └── docs/
-│       ├── architecture.md          ← via apm run install-docs
-│       └── breaking-bad-universe.md ← via apm run install-docs
+├── fanhubapm/
+│   ├── architecture.md              ← via apm run install-docs
+│   └── breaking-bad-universe.md     ← via apm run install-docs
 ├── mcp-servers/
 │   └── fanhub-api-server.js         ← module 05
 └── .vscode/
     └── mcp.json                     ← wires fanhub-api + fanhub-db MCP servers
 ```
 
-### After install — start the MCP server
+### After install — start MCP servers
 
-The MCP server requires the FanHub backend to be running first:
+To use MCP servers, start the backend for your language track. For example, `.NET`:
 
 ```bash
-# Terminal 1 — FanHub backend (dotnet track)
+# Terminal 1 — FanHub backend (.NET track)
 cd dotnet/Backend && dotnet run
 
-# Terminal 2 — MCP server
+# Terminal 2 — MCP server (optional; mcp.json auto-wires fanhub-api + language-specific SQLite)
 node mcp-servers/fanhub-api-server.js
 ```
 
-`mcp.json` also wires up `mcp-sqlite` pointing at `dotnet/Backend/fanhub.db` for direct database queries through Copilot Chat.
+`.vscode/mcp.json` auto-wires:
+- `fanhub-api-server.js` — REST API access (all tracks)
+- `mcp-sqlite` — Direct database queries for whichever track you're using (Node.js, .NET, Java, or Go)
 
 ## Workshop Demo (5-minute reveal)
 

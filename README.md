@@ -16,15 +16,15 @@ Use it to:
 
 This repo **is** the package — a complete Copilot AI layer for FanHub's all four language tracks (Node.js, `.NET`, Java, Go). Includes shared instructions, prompts, skills, agents, REST API access, and database connectivity via MCP servers.
 
-| Module | Type                    | What It Adds                                                                                                                                                            |
-| ------ | ----------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 01     | Repository instructions | `.github/copilot-instructions.md` — coding conventions, architecture pointers, and bug-fix guidance for FanHub (deployed via `apm run install-docs`) |
-| 01     | Architecture doc        | `fanhubapm/architecture.md` — full reference: routes, models, EF Core setup, seed data, conventions, security notes (deployed via `apm run install-docs`)               |
-| 01     | Lore doc                | `fanhubapm/breaking-bad-universe.md` — Breaking Bad canon reference for skills and agents (deployed via `apm run install-docs`)                                         |
-| 03     | Prompts (×6)            | `check-data-accuracy`, `good-idea`, `plan-loreCardAndLorePage`, `prompt-to-skill`, `refresh-docs`, `risk-prioritizer`                                                   |
-| 04     | Skills (×3)             | `check-data-accuracy`, `lore-accuracy-check`, `new-card-skill` (includes scripts + templates)                                                                           |
-| 05     | MCP servers             | `fanhub-api-server.js` — REST API (all tracks); `mcp-sqlite` database access for all 4 language tracks (Node.js, .NET, Java, Go) via `.vscode/mcp.json`              |
-| 06     | Agents (×2)             | `scaffold-entity.agent.md`, `plan.agent.md`                                                                                                                             |
+| Module | Type                    | What It Adds                                                                                                                                              |
+| ------ | ----------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 01     | Repository instructions | `.github/copilot-instructions.md` — coding conventions, architecture pointers, and bug-fix guidance for FanHub (deployed via `apm run install-docs`)      |
+| 01     | Architecture doc        | `fanhubapm/architecture.md` — full reference: routes, models, EF Core setup, seed data, conventions, security notes (deployed via `apm run install-docs`) |
+| 01     | Lore doc                | `fanhubapm/breaking-bad-universe.md` — Breaking Bad canon reference for skills and agents (deployed via `apm run install-docs`)                           |
+| 03     | Prompts (×6)            | `check-data-accuracy`, `good-idea`, `plan-loreCardAndLorePage`, `prompt-to-skill`, `refresh-docs`, `risk-prioritizer`                                     |
+| 04     | Skills (×3)             | `check-data-accuracy`, `lore-accuracy-check`, `new-card-skill` (includes scripts + templates)                                                             |
+| 05     | MCP servers             | `fanhub-api-server.js` — REST API (all tracks); `mcp-sqlite` database access for all 4 language tracks (Node.js, .NET, Java, Go) via `.vscode/mcp.json`   |
+| 06     | Agents (×2)             | `scaffold-entity.agent.md`, `plan.agent.md`                                                                                                               |
 
 ## Installation
 
@@ -106,6 +106,7 @@ node mcp-servers/fanhub-api-server.js
 ```
 
 `.vscode/mcp.json` auto-wires:
+
 - `fanhub-api-server.js` — REST API access (all tracks)
 - `mcp-sqlite` — Direct database queries for whichever track you're using (Node.js, .NET, Java, or Go)
 

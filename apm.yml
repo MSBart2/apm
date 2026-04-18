@@ -15,7 +15,7 @@ scripts:
 
 dependencies:
   mcp:
-    # Module 05 — FanHub REST API (requires dotnet backend running on :5265)
+    # Module 05 — FanHub REST API (requires backend running on :5265)
     - name: fanhub-api
       registry: false
       transport: stdio

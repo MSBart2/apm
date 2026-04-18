@@ -1,6 +1,6 @@
 ---
 description: FanHub workshop codebase instructions for fixing bugs with Copilot
-applyTo: '**'
+applyTo: "**"
 ---
 
 # FanHub Copilot Instructions
@@ -37,10 +37,10 @@ Other language implementations (`node/`, `go/`, `java/`) exist but are **not the
 
 ## Reference Docs
 
-| Document                                                                                | Purpose                                                              |
-| --------------------------------------------------------------------------------------- | -------------------------------------------------------------------- |
-| [`architecture.md`](../dotnet/docs/architecture.md)                                     | Full architecture: routes, models, EF, conventions, config, security |
-| [`dotnet/BUGS.md`](../dotnet/BUGS.md)                                                   | Bug catalog with evidence and fix guidance                           |
-| [`dotnet/SETUP.md`](../dotnet/SETUP.md)                                                 | Detailed setup instructions                                          |
-| [`dotnet/docs/FEATURE-CHARACTER-DETAIL.md`](../dotnet/docs/FEATURE-CHARACTER-DETAIL.md) | Spec for the next feature to build                                   |
-| [`docs/breaking-bad-universe.md`](../dotnet/docs/breaking-bad-universe.md)              | Domain lore: characters, locations, show history                     |
+| Document                                                                                  | Purpose                                                              |
+| ----------------------------------------------------------------------------------------- | -------------------------------------------------------------------- |
+| [`architecture.md`](../fanhubapm/docs/architecture.md)                                    | Full architecture: routes, models, EF, conventions, config, security |
+| [`dotnet/BUGS.md`](../dotnet/BUGS.md)                                                     | Bug catalog with evidence and fix guidance                           |
+| [`dotnet/SETUP.md`](../dotnet/SETUP.md)                                                   | Detailed setup instructions                                          |
+| [`fanhubapm//FEATURE-CHARACTER-DETAIL.md`](../fanhubapm/docs/FEATURE-CHARACTER-DETAIL.md) | Spec for the next feature to build                                   |
+| [`fanhubapm//breaking-bad-universe.md`](../fanhubapm//docs/breaking-bad-universe.md)      | Domain lore: characters, locations, show history                     |

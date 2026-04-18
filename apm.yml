@@ -10,8 +10,8 @@ license: Apache-2.0
 target: all
 
 scripts:
-  install-docs: "curl -fsSL --create-dirs -o dotnet/docs/architecture.md https://raw.githubusercontent.com/MSBart2/apm/main/docs/architecture.md && curl -fsSL --create-dirs -o dotnet/docs/breaking-bad-universe.md https://raw.githubusercontent.com/MSBart2/apm/main/docs/breaking-bad-universe.md && curl -fsSL --create-dirs -o .github/copilot-instructions.md https://raw.githubusercontent.com/MSBart2/apm/main/.apm/instructions/copilot-instructions.instructions.md"
-  uninstall-docs: "node -e \"const fs = require('fs'); ['dotnet/docs/architecture.md','dotnet/docs/breaking-bad-universe.md','.github/copilot-instructions.md'].forEach(f => { try { fs.unlinkSync(f); } catch(e) {} })\""
+  install-docs: "curl -fsSL --create-dirs -o fanhubapm/architecture.md https://raw.githubusercontent.com/MSBart2/apm/main/fanhubapm/architecture.md && curl -fsSL --create-dirs -o fanhubapm/breaking-bad-universe.md https://raw.githubusercontent.com/MSBart2/apm/main/fanhubapm/breaking-bad-universe.md && curl -fsSL --create-dirs -o .github/copilot-instructions.md https://raw.githubusercontent.com/MSBart2/apm/main/.apm/instructions/copilot-instructions.md"
+  uninstall-docs: 'node -e "const fs = require(''fs''); [''fanhubapm/architecture.md'',''fanhubapm/breaking-bad-universe.md'',''.github/copilot-instructions.md''].forEach(f => { try { fs.unlinkSync(f); } catch(e) {} })"'
 
 dependencies:
   mcp:
@@ -24,8 +24,23 @@ dependencies:
       env:
         FANHUB_API_URL: "http://localhost:5265"
     # Module 05 — Direct SQLite access via fanhub.db
-    - name: fanhub-db
+    - name: fanhub-db-dotnet
       registry: false
       transport: stdio
       command: npx
       args: ["-y", "mcp-sqlite", "${workspaceFolder}/dotnet/Backend/fanhub.db"]
+    - name: fanhub-db-node
+      registry: false
+      transport: stdio
+      command: npx
+      args: ["-y", "mcp-sqlite", "${workspaceFolder}/node/Backend/fanhub.db"]
+    - name: fanhub-db-java
+      registry: false
+      transport: stdio
+      command: npx
+      args: ["-y", "mcp-sqlite", "${workspaceFolder}/java/Backend/fanhub.db"]
+    - name: fanhub-go
+      registry: false
+      transport: stdio
+      command: npx
+      args: ["-y", "mcp-sqlite", "${workspaceFolder}/go/Backend/fanhub.db"]

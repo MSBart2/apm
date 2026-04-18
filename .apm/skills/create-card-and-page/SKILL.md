@@ -1,5 +1,5 @@
 ---
-name: create-card-and-page skill
+name: create-card-and-page
 description: >
   Use this skill when asked to add a new entity type with a card grid page to FanHub.
   It scaffolds the full stack: backend model, DbContext registration, seed data,

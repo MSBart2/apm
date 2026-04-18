@@ -9,11 +9,6 @@ author: MSBart2
 license: Apache-2.0
 target: all
 
-scripts:
-  setup-mcp: "node ${workspaceFolder}/.github/skills/fanhub-setup/merge-mcp.js"
-  install-docs: "node ${workspaceFolder}/.github/skills/fanhub-setup/install-docs.js"
-  uninstall-docs: 'node -e "const fs=require(''fs'');const p=require(''path'');[p.join(process.cwd(),''.github/docs/fanhub'')].forEach(d=>{try{require(''child_process'').execSync(''rm -rf ''+d)}catch(e){}});"'
-
 dependencies:
   apm: []
   mcp: []

@@ -22,8 +22,9 @@ apm/
 │   │   ├── check-data-accuracy/
 │   │   ├── create-card-and-page/
 │   │   └── fanhub-setup/              # ← Setup skill with MCP & docs scripts
-│   │       ├── merge-mcp.js
-│   │       ├── install-docs.js
+│   │       ├── scripts/
+│   │       │   ├── merge-mcp.js
+│   │       │   └── install-docs.js
 │   │       └── SKILL.md
 │   └── agents/                         # 2 custom agents
 ├── mcp-servers.json               # MCP server definitions (read by merge-mcp.js)
@@ -74,7 +75,7 @@ The `.apm/skills/fanhub-setup/` directory contains two critical scripts:
 
 **Called via**: `apm run setup-mcp` (defined in `apm.yml`)
 
-**Deployed to**: `.github/skills/fanhub-setup/merge-mcp.js` (when consumer runs `apm install`)
+**Deployed to**: `.github/skills/fanhub-setup/scripts/merge-mcp.js` (when consumer runs `apm install`)
 
 #### `install-docs.js`
 
@@ -88,7 +89,7 @@ The `.apm/skills/fanhub-setup/` directory contains two critical scripts:
 
 **Called via**: `apm run install-docs` (defined in `apm.yml`)
 
-**Deployed to**: `.github/skills/fanhub-setup/install-docs.js` (when consumer runs `apm install`)
+**Deployed to**: `.github/skills/fanhub-setup/scripts/install-docs.js` (when consumer runs `apm install`)
 
 ### `mcp-servers.json`
 
@@ -111,8 +112,8 @@ name: fanhub-workshop # Package name (for apm install MSBart2/apm)
 version: 1.0.0 # Semantic versioning
 target: all # Deploy to all language tracks
 scripts: # Scripts callable via apm run <name>
-  setup-mcp: node ${workspaceFolder}/.github/skills/fanhub-setup/merge-mcp.js # Merges MCP config safely
-  install-docs: node ${workspaceFolder}/.github/skills/fanhub-setup/install-docs.js # Installs docs to consumer repo
+  setup-mcp: node ${workspaceFolder}/.github/skills/fanhub-setup/scripts/merge-mcp.js # Merges MCP config safely
+  install-docs: node ${workspaceFolder}/.github/skills/fanhub-setup/scripts/install-docs.js # Installs docs to consumer repo
   uninstall-docs: 'node -e "const fs=require(''fs'');const p=require(''path'');..."' # Removes docs directory
 dependencies:
   apm: [] # No APM dependencies
@@ -151,13 +152,14 @@ dependencies:
 
 **How it works**:
 
-1. **Store scripts inside a skill directory** — e.g., `.apm/skills/fanhub-setup/merge-mcp.js`
-2. **APM deploys the entire skill** — Scripts land in `.github/skills/<skill-name>/` when `apm install` runs
-3. **Reference in `apm.yml`** — Use the deployed path: `node ${workspaceFolder}/.github/skills/fanhub-setup/merge-mcp.js`
+1. **Store scripts inside a skill's `scripts/` directory** — e.g., `.apm/skills/fanhub-setup/scripts/merge-mcp.js`
+2. **APM deploys the entire skill** — Scripts land in `.github/skills/<skill-name>/scripts/` when `apm install` runs
+3. **Reference in `apm.yml`** — Use the deployed path: `node ${workspaceFolder}/.github/skills/fanhub-setup/scripts/merge-mcp.js`
 4. **Make scripts executable** — Mark them with `#!/usr/bin/env node` shebang (Node.js scripts)
 5. **Keep scripts cross-platform** — Prefer Node.js over shell for portability
 
 **Benefits**:
+
 - ✅ Scripts stay versioned with the skill
 - ✅ Related functionality is organized together
 - ✅ Scripts are auto-deployed when the skill is installed
@@ -178,6 +180,7 @@ This approach has a fundamental friction point: **consumers don't automatically 
 **Result**: Users must read the README to know what to do. If they skip that step, `apm run install-docs` and `apm run setup-mcp` fail with "script not found" errors.
 
 **APM Hook Architecture** (verified from official docs):
+
 - APM supports "hooks" as a primitive type (JSON configuration files)
 - Hooks deploy to `.github/hooks/*.json`, `.claude/settings.json`, `.cursor/hooks.json`
 - **Hooks are configuration files, not executable automation triggers**
@@ -185,6 +188,7 @@ This approach has a fundamental friction point: **consumers don't automatically 
 - See https://microsoft.github.io/apm/reference/cli-commands/ for `apm install` hooks deployment
 
 **Potential solutions** (if APM adds post-install automation in the future):
+
 1. APM **post-install hooks** (not yet documented or available)
 2. Create a `.apm/hooks/` directory with post-install automation files (not a recognized pattern yet)
 3. Document this prominently in README and accept the friction as a current APM limitation

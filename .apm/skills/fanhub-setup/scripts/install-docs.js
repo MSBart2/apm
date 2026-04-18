@@ -1,28 +1,37 @@
 #!/usr/bin/env node
 /**
  * Install FanHub documentation into the consumer repository
- * 
- * Usage: node .github/skills/fanhub-setup/install-docs.js
- * 
+ *
+ * Usage: node .github/skills/fanhub-setup/scripts/install-docs.js
+ *
  * This script is part of the FanHub setup skill. It copies FanHub documentation
- * from the APM package into your project's .github/docs/fanhub/ directory.
- * 
- * Copies all .md files from apm_modules/MSBart2/apm/fanhubdocs/ to .github/docs/fanhub/
+ * from the APM package into your project's fanhubdocs/ directory at the repo root.
+ *
+ * Copies all .md files from apm_modules/MSBart2/apm/fanhubdocs/ to fanhubdocs/
  */
 
-const fs = require('fs');
-const path = require('path');
+const fs = require("fs");
+const path = require("path");
 
 // Paths
-const packageRoot = path.join(__dirname, '..', '..', '..', '..', 'apm_modules', 'MSBart2', 'apm');
-const srcDocsDir = path.join(packageRoot, 'fanhubdocs');
-const destDocsDir = path.join(process.cwd(), '.github', 'docs', 'fanhub');
+const packageRoot = path.join(
+  __dirname,
+  "..",
+  "..",
+  "..",
+  "..",
+  "apm_modules",
+  "MSBart2",
+  "apm",
+);
+const srcDocsDir = path.join(packageRoot, "fanhubdocs");
+const destDocsDir = path.join(process.cwd(), "fanhubdocs");
 
 try {
   // Check if source docs directory exists
   if (!fs.existsSync(srcDocsDir)) {
     console.error(`Error: FanHub docs directory not found at ${srcDocsDir}`);
-    console.error('Make sure you have run: apm install MSBart2/apm');
+    console.error("Make sure you have run: apm install MSBart2/apm");
     process.exit(1);
   }
 
@@ -48,11 +57,11 @@ try {
     }
   });
 
-  console.log('');
+  console.log("");
   console.log(`✓ FanHub documentation installed (${fileCopied} file(s))`);
   console.log(`  Location: ${destDocsDir}`);
-  console.log('');
-  console.log('📚 Available documents:');
+  console.log("");
+  console.log("📚 Available documents:");
   files.forEach((file) => {
     const stat = fs.statSync(path.join(srcDocsDir, file));
     if (stat.isFile()) {
@@ -62,6 +71,6 @@ try {
 
   process.exit(0);
 } catch (error) {
-  console.error('Error installing documentation:', error.message);
+  console.error("Error installing documentation:", error.message);
   process.exit(1);
 }

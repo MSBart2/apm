@@ -1,5 +1,6 @@
 ---
 description: FanHub workshop codebase instructions for fixing bugs with Copilot
+applyTo: '**'
 ---
 
 # FanHub Copilot Instructions

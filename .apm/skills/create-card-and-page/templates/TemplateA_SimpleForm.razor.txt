@@ -1,0 +1,110 @@
+@page "/{entityNames}"
+@rendermode InteractiveServer
+@inject HttpClient Http
+
+<PageTitle>{Plural Label} - FanHub</PageTitle>
+
+<div class="{entityNames}-page">
+    <div class="page-header">
+        <div class="page-header-label">FanHub</div>
+        <h1>{Plural Label}</h1>
+        <p class="page-subtitle">{Tagline or description}</p>
+    </div>
+
+    <div class="add-form">
+        <div class="form-header">
+            <h2>Add New {EntityName}</h2>
+            <p class="form-subtitle">Create a new entry and add it to the collection</p>
+        </div>
+        <form @onsubmit="HandleSubmit" @onsubmit:preventDefault>
+            <div class="form-group">
+                <label for="title">Title</label>
+                <input id="title" type="text" @bind="newTitle" placeholder="Enter a title" />
+            </div>
+            <div class="form-group">
+                <label for="description">Description</label>
+                <textarea id="description" @bind="newDescription" placeholder="Enter a description"></textarea>
+            </div>
+            <button type="submit" class="btn-submit">Add {EntityName}</button>
+        </form>
+    </div>
+
+    @if ({entityNames} == null)
+    {
+        <div class="empty-state loading">
+            <div class="empty-state-icon">⏳</div>
+            <p>Loading {entityNames}...</p>
+        </div>
+    }
+    else if ({entityNames}.Count == 0)
+    {
+        <div class="empty-state">
+            <div class="empty-state-icon">✨</div>
+            <h3>No {entityNames} yet</h3>
+            <p>Add one to get started!</p>
+        </div>
+    }
+    else
+    {
+        <div class="{entityNames}-grid">
+            @foreach (var item in {entityNames})
+            {
+                <div class="{entityName}-card">
+                    <h3>@item.Title</h3>
+                    <p>@item.Description</p>
+                </div>
+            }
+        </div>
+    }
+</div>
+
+@code {
+    private List<{EntityName}>? {entityNames};
+    private string newTitle = string.Empty;
+    private string newDescription = string.Empty;
+
+    protected override async Task OnInitializedAsync()
+    {
+        {entityNames} = await Http.GetFromJsonAsync<List<{EntityName}>>("api/{entityNames}");
+    }
+
+    private async Task HandleSubmit()
+    {
+        if (string.IsNullOrWhiteSpace(newTitle))
+            return;
+
+        var newItem = new {EntityName}
+        {
+            ShowId = 1,
+            Title = newTitle,
+            Description = newDescription
+        };
+
+        try
+        {
+            var response = await Http.PostAsJsonAsync("api/{entityNames}", newItem);
+            var created = await response.Content.ReadFromJsonAsync<{EntityName}>();
+
+            if (created != null)
+            {
+                {entityNames} ??= new List<{EntityName}>();
+                {entityNames}.Insert(0, created);
+            }
+
+            newTitle = string.Empty;
+            newDescription = string.Empty;
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error: {ex.Message}");
+        }
+    }
+
+    public class {EntityName}
+    {
+        public int Id { get; set; }
+        public int ShowId { get; set; }
+        public string Title { get; set; } = "";
+        public string Description { get; set; } = "";
+    }
+}

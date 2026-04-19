@@ -47,7 +47,8 @@ Safely integrates FanHub MCP servers into your `.vscode/mcp.json` **without dest
 
 Copies FanHub documentation from the APM package into `fanhubdocs/` at repo root:
 
-- `architecture.md` — Full API reference, models, EF Core setup, seed data
+- `architecture-backend.md` — Full API reference, models, EF Core setup, seed data
+- `architecture-frontend.md` — Blazor Server setup, data fetch patterns, component conventions
 - `breaking-bad-universe.md` — Breaking Bad lore for context
 
 ### MCP Servers Configured

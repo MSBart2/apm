@@ -19,7 +19,8 @@ This repo **is** the package — a complete Copilot AI layer for FanHub's all fo
 | Module | Type                    | What It Adds                                                                                                                                             |
 | ------ | ----------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | 01     | Repository instructions | `.github/copilot-instructions.md` — coding conventions, architecture pointers, and bug-fix guidance for FanHub                                           |
-| 01     | Architecture doc        | `fanhubdocs/architecture.md` — full reference: routes, models, EF Core setup, seed data, conventions, security notes (via `apm run install-docs`)        |
+| 01     | Backend architecture    | `fanhubdocs/architecture-backend.md` — ASP.NET Core API, EF Core, models, seed data, database (via `apm run install-docs`)                              |
+| 01     | Frontend architecture   | `fanhubdocs/architecture-frontend.md` — Blazor Server frontend, components, data fetch patterns (via `apm run install-docs`)                            |
 | 01     | Lore doc                | `fanhubdocs/breaking-bad-universe.md` — Breaking Bad canon reference for skills and agents (via `apm run install-docs`)                                  |
 | 03     | Prompts (×6)            | `check-data-accuracy`, `good-idea`, `plan-loreCardAndLorePage`, `prompt-to-skill`, `refresh-docs`, `risk-prioritizer`                                    |
 | 04     | Skills (×3)             | `check-data-accuracy`, `lore-accuracy-check`, `new-card-skill` (includes scripts + templates)                                                            |
@@ -92,7 +93,8 @@ fanhub/
 │       ├── scaffold-entity.agent.md
 │       └── plan.agent.md
 ├── fanhubdocs/                      ← via apm run install-docs
-│   ├── architecture.md
+│   ├── architecture-backend.md
+│   ├── architecture-frontend.md
 │   └── breaking-bad-universe.md
 └── .vscode/
     └── mcp.json                     ← wires fanhub-api + fanhub-db MCP servers (via apm run setup-mcp)

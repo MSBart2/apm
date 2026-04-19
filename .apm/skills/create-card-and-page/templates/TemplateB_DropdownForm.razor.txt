@@ -1,0 +1,174 @@
+@page "/{entityNames}"
+@rendermode InteractiveServer
+@inject HttpClient Http
+
+<PageTitle>{Plural Label} - FanHub</PageTitle>
+
+<div class="{entityNames}-page">
+    <div class="page-header">
+        <div class="page-header-label">FanHub</div>
+        <h1>{Plural Label}</h1>
+        <p class="page-subtitle">{Tagline or description}</p>
+    </div>
+
+    <div class="add-form">
+        <div class="form-header">
+            <h2>Add New {EntityName}</h2>
+            <p class="form-subtitle">Create a new entry and add it to the collection</p>
+        </div>
+        <form @onsubmit="HandleSubmit" @onsubmit:preventDefault>
+            <div class="form-group">
+                <label for="title">Title</label>
+                <input id="title" type="text" @bind="newTitle" placeholder="Enter a title" />
+            </div>
+
+            <div class="form-group">
+                <label for="character">Character</label>
+                <select id="character" @bind="newCharacterId">
+                    <option value="">-- Select Character --</option>
+                    @if (availableCharacters != null)
+                    {
+                        @foreach (var character in availableCharacters)
+                        {
+                            <option value="@character.Id">@character.Name</option>
+                        }
+                    }
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="episode">Episode</label>
+                <select id="episode" @bind="newEpisodeId">
+                    <option value="">-- Select Episode --</option>
+                    @if (availableEpisodes != null)
+                    {
+                        @foreach (var episode in availableEpisodes)
+                        {
+                            <option value="@episode.Id">S@episode.SeasonId E@episode.EpisodeNumber: @episode.Title</option>
+                        }
+                    }
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="description">Description</label>
+                <textarea id="description" @bind="newDescription" placeholder="Enter a description"></textarea>
+            </div>
+            <button type="submit" class="btn-submit">Add {EntityName}</button>
+        </form>
+    </div>
+
+    @if ({entityNames} == null)
+    {
+        <div class="empty-state loading">
+            <div class="empty-state-icon">⏳</div>
+            <p>Loading {entityNames}...</p>
+        </div>
+    }
+    else if ({entityNames}.Count == 0)
+    {
+        <div class="empty-state">
+            <div class="empty-state-icon">✨</div>
+            <h3>No {entityNames} yet</h3>
+            <p>Add one to get started!</p>
+        </div>
+    }
+    else
+    {
+        <div class="{entityNames}-grid">
+            @foreach (var item in {entityNames})
+            {
+                <div class="{entityName}-card">
+                    <h3>@item.Title</h3>
+                    <p>@item.Description</p>
+                </div>
+            }
+        </div>
+    }
+</div>
+
+@code {
+    private List<{EntityName}>? {entityNames};
+    private List<CharacterDto>? availableCharacters;
+    private List<EpisodeDto>? availableEpisodes;
+
+    private string newTitle = string.Empty;
+    private int? newCharacterId;
+    private int? newEpisodeId;
+    private string newDescription = string.Empty;
+
+    protected override async Task OnInitializedAsync()
+    {
+        // Load main entities, related entities, and any dropdown data in parallel
+        var itemsTask = Http.GetFromJsonAsync<List<{EntityName}>>("api/{entityNames}");
+        var charactersTask = Http.GetFromJsonAsync<List<CharacterDto>>("api/characters");
+        var episodesTask = Http.GetFromJsonAsync<List<EpisodeDto>>("api/episodes");
+
+        await Task.WhenAll(itemsTask, charactersTask, episodesTask);
+
+        {entityNames} = await itemsTask;
+        availableCharacters = await charactersTask;
+        availableEpisodes = await episodesTask;
+    }
+
+    private async Task HandleSubmit()
+    {
+        // Validate required fields
+        if (string.IsNullOrWhiteSpace(newTitle) || !newCharacterId.HasValue || !newEpisodeId.HasValue)
+            return;
+
+        var newItem = new {EntityName}
+        {
+            ShowId = 1,
+            Title = newTitle,
+            CharacterId = newCharacterId.Value,
+            EpisodeId = newEpisodeId.Value,
+            Description = newDescription
+        };
+
+        try
+        {
+            var response = await Http.PostAsJsonAsync("api/{entityNames}", newItem);
+            var created = await response.Content.ReadFromJsonAsync<{EntityName}>();
+
+            if (created != null)
+            {
+                {entityNames} ??= new List<{EntityName}>();
+                {entityNames}.Insert(0, created);
+            }
+
+            newTitle = string.Empty;
+            newCharacterId = null;
+            newEpisodeId = null;
+            newDescription = string.Empty;
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error: {ex.Message}");
+        }
+    }
+
+    public class {EntityName}
+    {
+        public int Id { get; set; }
+        public int ShowId { get; set; }
+        public int CharacterId { get; set; }
+        public int EpisodeId { get; set; }
+        public string Title { get; set; } = "";
+        public string Description { get; set; } = "";
+    }
+
+    public class CharacterDto
+    {
+        public int Id { get; set; }
+        public string Name { get; set; } = "";
+    }
+
+    public class EpisodeDto
+    {
+        public int Id { get; set; }
+        public int SeasonId { get; set; }
+        public int EpisodeNumber { get; set; }
+        public string Title { get; set; } = "";
+    }
+}

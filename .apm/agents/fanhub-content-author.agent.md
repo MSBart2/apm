@@ -1,5 +1,5 @@
 ---
-name: content-author
+name: fanhub-content-author
 description: >
   Scaffolds a new entity type (e.g. Quotes, Locations, Factions) into FanHub
   with a full-stack implementation: backend model, DbContext registration, seed data,
@@ -55,10 +55,10 @@ Use what Explore returns to inform all scaffolding decisions (property styles, n
 
 If the entity name, properties, or seed count is not clear from the user's request, ask before starting. Otherwise, infer sensible defaults and proceed.
 
-For a **Quotes** entity specifically, use these defaults:
+For a **Quotes** entity specifically, the model already exists in the codebase. Use the real properties:
 
-- Properties: `int Id`, `string Text`, `string Speaker`, `string Context`, `int ShowId`
-- Form fields: Text, Speaker, Context
+- Properties: `int Id`, `int ShowId`, `int CharacterId`, `int EpisodeId`, `string QuoteText`, `bool IsFamous`, `int Likes`
+- Template B required (has FK to Character and Episode)
 - Nav card label: "Quotes"
 - Nav card icon: 💬
 - Seed source: `docs/breaking-bad-universe.md`
@@ -66,6 +66,8 @@ For a **Quotes** entity specifically, use these defaults:
 ### Phase 3 — Full-stack scaffold
 
 Load and follow the **`create-card-and-page`** skill exactly.
+
+**Before starting:** Check if the entity already partially exists. Inspect `dotnet/Backend/Models/`, `dotnet/Backend/Controllers/`, and `dotnet/Frontend/Components/Pages/` for any existing files. Only create what is missing — do not overwrite existing backend models or controllers.
 
 Complete every step in order:
 
@@ -78,15 +80,14 @@ Complete every step in order:
 7. Frontend model
 8. Homepage stat card + nav-card
 9. Blazor list page with inline add form
-10. **Header navigation** — add a link to `dotnet/Frontend/Components/Layout/NavBar.razor` following the existing `<li><a href="...">` pattern:
+10. **Header navigation** — add a link to `dotnet/Frontend/Components/Layout/NavBar.razor` (⚠️ NOT NavMenu.razor — that's an unused Blazor sidebar). Add inside the `<ul class="nav-links">`:
     ```html
-    <li><a href="/{entity}s">{EntityName}s</a></li>
+    <li><a href="/{entityNames}">{Plural Label}</a></li>
     ```
-    Place it after the last existing nav link (currently `<li><a href="/lore">Lore</a></li>`).
 
 ### Phase 3.5 — MCP server update
 
-After the REST controller exists, update `mcp-servers/fanhub-api-server.js` to expose the new entity to Copilot MCP tools. Two edits are required:
+After the REST controller exists, check `mcp-servers/fanhub-api-server.js` for existing tools first — search for `get_{entity}s` in the TOOLS array. **Skip this step entirely if the tools already exist.** Otherwise, two edits are required:
 
 **1. Add tool definitions to the `TOOLS` array** (mirror the pattern used for existing entities — see `get_characters`, `get_lore`, etc.):
 
@@ -136,15 +137,23 @@ case "create_{entity}":
 
 Verify the route segment matches the controller's `[Route("api/[controller]")]` — the controller class name (minus "Controller") determines the path.
 
-10. Build and run — execute these commands from `dotnet/` in sequence:
+11. **Verify the solution file** — before building, check `dotnet/FanHub.sln` for corrupted paths. If any project path contains `dotnet\dotnet\` (duplicated prefix), fix to bare relative paths (`Backend\Backend.csproj`, `Frontend\Frontend.csproj`). Remove any project references whose `.csproj` files do not exist on disk.
+
+12. **Build** — run from the `dotnet/` directory:
+
+    ```powershell
+    pushd c:\<workspace>\dotnet; dotnet build FanHub.sln; popd
     ```
-    dotnet build FanHub.sln
+
+    Confirm 0 errors before continuing. Warnings are expected and acceptable.
+
+13. **Start the backend as a background job** so it stays alive during Phase 4:
+    ```powershell
+    $job = Start-Job { Set-Location c:\<workspace>\dotnet; dotnet run --project Backend }
+    Start-Sleep -Seconds 8
+    Invoke-RestMethod http://localhost:5000/api/shows
     ```
-    Confirm the build succeeds with zero errors before continuing. Then start the backend so the live API is reachable for the accuracy check in Phase 4:
-    ```
-    dotnet run --project Backend/Backend.csproj
-    ```
-    Run this in the background so the API stays up during Phase 4. Confirm the API responds (e.g. `GET /api/shows` returns data) before proceeding.
+    Confirm the API responds before proceeding. If port differs, check `dotnet/Backend/Properties/launchSettings.json`.
 
 ### Phase 4 — Seed data accuracy check
 

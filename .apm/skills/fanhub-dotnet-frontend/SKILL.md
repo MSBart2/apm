@@ -1,5 +1,5 @@
 ---
-name: dotnet-frontend
+name: fanhub-dotnet-frontend
 description: >
   FanHub Blazor Server frontend conventions, patterns, and styling. Use when writing
   or fixing Razor components in dotnet/Frontend/ — data loading, null safety, form

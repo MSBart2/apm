@@ -1,5 +1,5 @@
 ---
-name: dotnet-backend
+name: fanhub-dotnet-backend
 description: >
   FanHub ASP.NET Core backend conventions, patterns, and best practices. Use when
   writing or fixing C# code in dotnet/Backend/ — controllers, models, DbContext,

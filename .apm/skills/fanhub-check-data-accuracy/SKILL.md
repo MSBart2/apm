@@ -1,5 +1,5 @@
 ---
-name: check-data-accuracy
+name: fanhub-check-data-accuracy
 description: >
   Use this skill when asked to verify, validate, fact-check, or review any data entry,
   lore fact, character bio, episode record, quote, or show content for accuracy against

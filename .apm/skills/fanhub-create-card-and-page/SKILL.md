@@ -1,5 +1,5 @@
 ---
-name: create-card-and-page
+name: fanhub-create-card-and-page
 description: >
   Use this skill when asked to add a new entity type to FanHub. Always scaffolds the
   complete full-stack implementation: backend model, DbContext registration, seed data,
@@ -22,13 +22,23 @@ Ask if unclear; otherwise assume and proceed:
 3. **Plural label** — for stat card and nav (`"Quotes"`, `"Locations"`)
 4. **Nav icon** — single emoji (📍, 💬)
 5. **FK relationships?** → yes = Template B required; no = Template A
-6. **Show name** — for `{ShowName}` placeholder in header and card tags (e.g. `Breaking Bad`, `Peaky Blinders`)
 
-Seed 12–15 records from the relevant universe doc in `fanhubdocs/`.
+Seed 12–15 records from `docs/breaking-bad-universe.md`.
 
 ---
 
 ## Steps — complete all of them in order
+
+### 0 — Check for partial existing implementation
+
+Before writing anything, check whether the entity already exists:
+
+- `dotnet/Backend/Models/{EntityName}.cs` — if present, **skip steps 1–2**; use the real property names it defines
+- `dotnet/Backend/Controllers/{EntityName}sController.cs` — if present, **skip step 5**
+- `dotnet/Frontend/Components/Pages/{EntityName}s.razor` — if present, **skip step 9**
+- `dotnet/Backend/Data/FanHubContext.cs` DbSet registration — check before step 2
+
+Only create what is missing. Never overwrite an existing file for steps 1–5.
 
 ### 1 — Backend model (`dotnet/Backend/Models/{EntityName}.cs`)
 
@@ -120,16 +130,14 @@ Add inside `<section class="nav-cards">` after the last `<a class="nav-card">`:
 </a>
 ```
 
-### 8 — Header nav link (`dotnet/Frontend/Components/Layout/NavMenu.razor`)
+### 8 — Header nav link (`dotnet/Frontend/Components/Layout/NavBar.razor`)
 
-Add alongside the existing `NavLink` items:
+> ⚠️ The active nav component is **`NavBar.razor`** — NOT `NavMenu.razor`. `NavMenu.razor` is an unused Blazor sidebar template. Always edit `NavBar.razor`.
+
+**First**, read the existing `<ul class="nav-links">` items. Add the new entity alongside them:
 
 ```html
-<div class="nav-item px-3">
-  <NavLink class="nav-link" href="{entityNames}">
-    <span aria-hidden="true">{emoji}</span> {Plural Label}
-  </NavLink>
-</div>
+<li><a href="/{entityNames}">{Plural Label}</a></li>
 ```
 
 ### 9 — Blazor list page (`dotnet/Frontend/Components/Pages/{EntityName}s.razor`)
@@ -157,13 +165,42 @@ Open the template file and use it as the exact starting point. Replace all `{Ent
 
 ## Gotchas
 
-**Null guards** — Blazor renders before `OnInitializedAsync` completes. Always null-check before iterating collections in markup.
+**⚠️ Episodes API returns a WRAPPED response — not a plain array.**
+Every page that shows an episode dropdown or displays episode data MUST deserialize via a wrapper DTO:
 
-**Wrapped API responses** — Episodes endpoint returns `{ success, count, data[] }`. Deserialize via an `ApiResponse<T>` wrapper DTO if needed.
+```csharp
+// WRONG — will silently return null or throw:
+var episodes = await Http.GetFromJsonAsync<List<EpisodeDto>>("api/episodes");
+
+// CORRECT — Episodes controller returns { success, count, data[] }:
+var response = await Http.GetFromJsonAsync<EpisodesApiResponse>("api/episodes");
+var episodes = response?.Data?.ToList();
+
+public class EpisodesApiResponse
+{
+    public bool Success { get; set; }
+    public int Count { get; set; }
+    public List<EpisodeDto> Data { get; set; }
+}
+```
+
+All other controllers (`/api/characters`, `/api/quotes`, `/api/locations`, etc.) return plain arrays.
+
+**`<style>` block is mandatory — every page must have one.** Do not finish step 9 without verifying the `<style>` block is present. Copy `templates/PageStyles.css.txt` in full and substitute placeholders. A page without styles will look completely unstyled.
+
+**Null guards** — Blazor renders before `OnInitializedAsync` completes. Always null-check before iterating collections in markup.
 
 **`@` escaping in `<style>`** — Write `@@media` not `@media` inside Razor `<style>` blocks.
 
-**`@` in option text** — Use `S@@ep.SeasonId` for literal `@` characters in Razor markup.
+**`@` in option text — use explicit parentheses.** When a `@` expression appears mid-word (e.g. `S@(episode.SeasonId)`), Razor cannot parse it without parentheses. Always use `@(expr)` form in option labels:
+```html
+<!-- WRONG — Razor can't parse S@expr mid-word: -->
+<option>S@episode.SeasonId E@episode.EpisodeNumber: @episode.Title</option>
+
+<!-- CORRECT — explicit parentheses for mid-word expressions: -->
+<option>S@(episode.SeasonId) E@(episode.EpisodeNumber): @episode.Title</option>
+```
+Note: `@@` is ONLY for `<style>` blocks where `@` must be escaped to avoid being treated as CSS at-rules. In markup, `@@` outputs a literal `@`.
 
 ---
 
@@ -178,15 +215,18 @@ Open the template file and use it as the exact starting point. Replace all `{Ent
 
 ## Checklist
 
+- [ ] `FanHub.sln` project paths are correct (no `dotnet\dotnet\` duplicates)
+- [ ] `dotnet build FanHub.sln` succeeds with 0 errors
 - [ ] Migration ran; `GET /api/{entityNames}` returns seeded data
 - [ ] `POST /api/{entityNames}` creates and returns a record
 - [ ] Homepage stat card shows count
 - [ ] Homepage nav card links to `/{entityNames}`
-- [ ] `NavMenu.razor` includes a `NavLink` for `/{entityNames}`
+- [ ] `NavBar.razor` (not NavMenu.razor) includes the new nav link
 - [ ] Correct template used (A or B)
 - [ ] Template B: all FK fields are `<select>` dropdowns populated from the API
 - [ ] Template B: cards display character name and episode tag in card footer
 - [ ] No "0" values in form fields; proper placeholders shown
+- [ ] `<style>` block is present at the bottom of the page (CSS from `PageStyles.css.txt` applied)
 - [ ] CSS from `PageStyles.css.txt` applied — page looks polished
 - [ ] Count badge shows in page header once data loads
 - [ ] Cards animate in with staggered `fadeInUp` on page load

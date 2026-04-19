@@ -44,14 +44,19 @@ public DbSet<{EntityName}> {EntityName}s { get; set; }
 
 Add a seed block after the last existing one. All records use `ShowId = 1`. Draw from `docs/breaking-bad-universe.md`.
 
-### 4 — EF migration (run in `dotnet/Backend/` terminal)
+### 4 — EF migration (run the script)
 
-```bash
-dotnet ef migrations add Add{EntityName}
-dotnet ef database update
+```powershell
+.github/skills/create-card-and-page/scripts/run-migration.ps1 -EntityName {EntityName}
 ```
 
-Stop and fix if migration fails before continuing.
+The script does three things in order:
+
+1. **Stops** any running dotnet Backend processes
+2. **Deletes** `fanhub.db` (and WAL/SHM files) so seed data applies fresh on next startup
+3. **Adds** the EF migration (`dotnet ef migrations add Add{EntityName}`)
+
+The backend calls `context.Database.Migrate()` on startup, which applies all pending migrations and then runs the seed. Stop and fix if the migration fails before continuing.
 
 ### 5 — Backend controller (`dotnet/Backend/Controllers/{EntityName}sController.cs`)
 
@@ -145,7 +150,7 @@ Open the template file and use it as the exact starting point. Replace all `{Ent
 - Load related entities in parallel with `Task.WhenAll`
 - User-friendly option labels: character names, `S@@ep.SeasonId E@@ep.EpisodeNumber: @ep.Title`
 
-**CSS** — Copy `templates/PageStyles.css.txt` in full into a `<style>` block. Do not write custom CSS from scratch. Replace `.{entityNames}-page` / `.{entityName}-card` class placeholders with actual names.
+**CSS** — Copy `templates/PageStyles.css.txt` in full into a `<style>` block at the bottom of the page. Do not write custom CSS from scratch. Replace `.{entityNames}-page` / `.{entityName}-card` class placeholders with actual names. The styles include: staggered `fadeInUp` card animations, `.card-index` / `.card-body` / `.card-footer` / `.card-tag` card structure, `.loading-spinner` for the loading state, `.form-feedback` success/error banners, `.page-header-meta` count badge, and a disabled state for the submit button.
 
 ---
 
@@ -179,7 +184,13 @@ Open the template file and use it as the exact starting point. Replace all `{Ent
 - [ ] `NavMenu.razor` includes a `NavLink` for `/{entityNames}`
 - [ ] Correct template used (A or B)
 - [ ] Template B: all FK fields are `<select>` dropdowns populated from the API
+- [ ] Template B: cards display character name and episode tag in card footer
 - [ ] No "0" values in form fields; proper placeholders shown
 - [ ] CSS from `PageStyles.css.txt` applied — page looks polished
+- [ ] Count badge shows in page header once data loads
+- [ ] Cards animate in with staggered `fadeInUp` on page load
+- [ ] Loading state shows spinner (not emoji)
+- [ ] Submit button shows "Adding…" and is disabled while posting
+- [ ] Success / error feedback message appears after form submit
 - [ ] Adding an item inserts it at top and clears the form
-- [ ] Empty state and loading state both render correctly
+- [ ] Empty state renders correctly with emoji icon

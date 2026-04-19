@@ -17,6 +17,7 @@ FanHub is a Breaking Bad fan site. It serves characters, episodes, quotes, lore,
 Other language implementations (`node/`, `go/`, `java/`) exist but are **not the focus**.
 
 > For deep implementation details:
+>
 > - **Backend**: Routes, models, EF Core setup, seed data, configuration — see [`architecture-backend.md`](fanhubdocs/architecture-backend.md)
 > - **Frontend**: Components, data fetch patterns, conventions — see [`architecture-frontend.md`](fanhubdocs/architecture-frontend.md)
 
@@ -32,25 +33,12 @@ Other language implementations (`node/`, `go/`, `java/`) exist but are **not the
 
 ---
 
-## Available Skills
-
-Load these skills when working in the relevant area — they contain full patterns, code examples, and gotchas:
-
-| Skill | When to use |
-| ----- | ----------- |
-| `dotnet-backend` | Writing or fixing C# controllers, models, EF Core queries, seeding, or unit tests |
-| `dotnet-frontend` | Writing or fixing Blazor components, data loading, forms, styling, or Razor syntax |
-| `create-card-and-page` | Adding a new entity type — scaffolds full-stack backend + frontend in one pass |
-| `check-data-accuracy` | Verifying seed data matches canonical Breaking Bad lore |
-
----
-
 ## Reference Docs
 
-| Document                                                                       | Purpose                                                              |
-| ------------------------------------------------------------------------------ | -------------------------------------------------------------------- |
-| [`architecture-backend.md`](fanhubdocs/architecture-backend.md)           | Backend: API routes, models, EF, seed data, config, security         |
-| [`architecture-frontend.md`](fanhubdocs/architecture-frontend.md)         | Frontend: Blazor components, data fetch, conventions                 |
-| [`dotnet/BUGS.md`](./dotnet/BUGS.md)                                           | Bug catalog with evidence and fix guidance                           |
-| [`dotnet/SETUP.md`](./dotnet/SETUP.md)                                         | Detailed setup instructions                                          |
-| [`fanhubdocs/breaking-bad-universe.md`](./fanhubdocs/breaking-bad-universe.md) | Domain lore: characters, locations, show history                     |
+| Document                                                                       | Purpose                                                      |
+| ------------------------------------------------------------------------------ | ------------------------------------------------------------ |
+| [`architecture-backend.md`](fanhubdocs/architecture-backend.md)                | Backend: API routes, models, EF, seed data, config, security |
+| [`architecture-frontend.md`](fanhubdocs/architecture-frontend.md)              | Frontend: Blazor components, data fetch, conventions         |
+| [`dotnet/BUGS.md`](./dotnet/BUGS.md)                                           | Bug catalog with evidence and fix guidance                   |
+| [`dotnet/SETUP.md`](./dotnet/SETUP.md)                                         | Detailed setup instructions                                  |
+| [`fanhubdocs/breaking-bad-universe.md`](./fanhubdocs/breaking-bad-universe.md) | Domain lore: characters, locations, show history             |

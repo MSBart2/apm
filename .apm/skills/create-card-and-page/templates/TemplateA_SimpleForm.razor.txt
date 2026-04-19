@@ -6,9 +6,16 @@
 
 <div class="{entityNames}-page">
     <div class="page-header">
-        <div class="page-header-label">FanHub</div>
+        <div class="page-header-label">FanHub · Breaking Bad</div>
         <h1>{Plural Label}</h1>
         <p class="page-subtitle">{Tagline or description}</p>
+        @if ({entityNames} != null)
+        {
+            <div class="page-header-meta">
+                <span class="meta-count">@{entityNames}.Count</span>
+                <span class="meta-label">{Plural Label}</span>
+            </div>
+        }
     </div>
 
     <div class="add-form">
@@ -16,6 +23,10 @@
             <h2>Add New {EntityName}</h2>
             <p class="form-subtitle">Create a new entry and add it to the collection</p>
         </div>
+        @if (!string.IsNullOrEmpty(formMessage))
+        {
+            <div class="form-feedback @(formSuccess ? "success" : "error")">@formMessage</div>
+        }
         <form @onsubmit="HandleSubmit" @onsubmit:preventDefault>
             <div class="form-group">
                 <label for="title">Title</label>
@@ -25,33 +36,44 @@
                 <label for="description">Description</label>
                 <textarea id="description" @bind="newDescription" placeholder="Enter a description"></textarea>
             </div>
-            <button type="submit" class="btn-submit">Add {EntityName}</button>
+            <button type="submit" class="btn-submit" disabled="@isSubmitting">
+                @(isSubmitting ? "Adding…" : "Add {EntityName}")
+            </button>
         </form>
     </div>
 
     @if ({entityNames} == null)
     {
-        <div class="empty-state loading">
-            <div class="empty-state-icon">⏳</div>
-            <p>Loading {entityNames}...</p>
+        <div class="empty-state">
+            <div class="loading-spinner"></div>
+            <p>Loading {entityNames}…</p>
         </div>
     }
     else if ({entityNames}.Count == 0)
     {
         <div class="empty-state">
-            <div class="empty-state-icon">✨</div>
+            <div class="empty-state-icon">{emoji}</div>
             <h3>No {entityNames} yet</h3>
-            <p>Add one to get started!</p>
+            <p>Add the first one above to get started.</p>
         </div>
     }
     else
     {
         <div class="{entityNames}-grid">
+            @{ int cardIndex = 0; }
             @foreach (var item in {entityNames})
             {
-                <div class="{entityName}-card">
-                    <h3>@item.Title</h3>
-                    <p>@item.Description</p>
+                int delay = cardIndex * 40;
+                cardIndex++;
+                <div class="{entityName}-card" style="animation-delay: @(delay)ms">
+                    <div class="card-index">#@cardIndex</div>
+                    <div class="card-body">
+                        <h3>@item.Title</h3>
+                        <p>@item.Description</p>
+                    </div>
+                    <div class="card-footer">
+                        <span class="card-tag">Breaking Bad</span>
+                    </div>
                 </div>
             }
         </div>
@@ -62,6 +84,9 @@
     private List<{EntityName}>? {entityNames};
     private string newTitle = string.Empty;
     private string newDescription = string.Empty;
+    private bool isSubmitting;
+    private string formMessage = string.Empty;
+    private bool formSuccess;
 
     protected override async Task OnInitializedAsync()
     {
@@ -71,7 +96,14 @@
     private async Task HandleSubmit()
     {
         if (string.IsNullOrWhiteSpace(newTitle))
+        {
+            formMessage = "Title is required.";
+            formSuccess = false;
             return;
+        }
+
+        isSubmitting = true;
+        formMessage = string.Empty;
 
         var newItem = new {EntityName}
         {
@@ -89,6 +121,8 @@
             {
                 {entityNames} ??= new List<{EntityName}>();
                 {entityNames}.Insert(0, created);
+                formMessage = "{EntityName} added successfully!";
+                formSuccess = true;
             }
 
             newTitle = string.Empty;
@@ -96,7 +130,13 @@
         }
         catch (Exception ex)
         {
+            formMessage = "Failed to add {entityName}. Please try again.";
+            formSuccess = false;
             Console.WriteLine($"Error: {ex.Message}");
+        }
+        finally
+        {
+            isSubmitting = false;
         }
     }
 

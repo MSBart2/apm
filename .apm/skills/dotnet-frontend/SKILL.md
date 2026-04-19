@@ -1,11 +1,14 @@
 ---
-description: FanHub Blazor Server Frontend code and styling conventions for beautiful, well-formed components
-applyTo: "dotnet/Frontend/**"
+name: dotnet-frontend
+description: >
+  FanHub Blazor Server frontend conventions, patterns, and styling. Use when writing
+  or fixing Razor components in dotnet/Frontend/ — data loading, null safety, form
+  design, dropdowns, FanHub brand colors, CSS patterns, or Razor gotchas.
 ---
 
-# FanHub Blazor Server Frontend Instructions
+# FanHub Blazor Server Frontend
 
-Guidelines for creating stunning, modern, and maintainable Blazor components in the FanHub frontend. Covers code patterns, styling conventions, layouts, colors, and best practices.
+Guidelines for modern, maintainable Blazor components with consistent FanHub styling.
 
 ---
 
@@ -65,7 +68,7 @@ protected override async Task OnInitializedAsync()
 }
 ```
 
-**✅ If form needs data, show loading state:**
+**✅ Show loading state while data loads:**
 
 ```razor
 @if (isLoading)
@@ -110,9 +113,9 @@ episodes = response?.Data;
 
 ## Form Design & User Experience
 
-### Dropdown vs. Input Fields
+### Dropdowns for Related Entities
 
-**✅ Always use dropdowns for related entities** (not numeric inputs):
+**✅ Always use dropdowns for FK fields** (never `<input type="number">`):
 
 ```razor
 <!-- ✅ GOOD — user-friendly, prevents invalid foreign keys -->
@@ -133,21 +136,16 @@ episodes = response?.Data;
 
 ### Numeric Input Gotcha
 
-When binding `int` to `<input type="number">`, the default value `0` displays and hides the placeholder.
+When binding `int` to `<input type="number">`, the default value `0` hides the placeholder.
 
-**✅ Solution:** Use nullable `int?` instead:
+**✅ Use nullable `int?` instead:**
 
 ```csharp
-// ✅ Better — field stays empty until user types
 private int? relatedEntityId;
 <input type="number" @bind="relatedEntityId" placeholder="Enter ID" />
 ```
 
 ### Validation
-
-- Check `HasValue` on nullable fields before submission
-- Validate that required dropdowns have selected values (not `0`)
-- Display validation errors in clear, user-friendly messages
 
 ```csharp
 private async Task HandleSubmit()
@@ -160,7 +158,6 @@ private async Task HandleSubmit()
         errorMessage = "Please fill in all fields";
         return;
     }
-
     // Proceed with submission
 }
 ```
@@ -171,17 +168,16 @@ private async Task HandleSubmit()
 
 ### FanHub Brand Colors
 
-- **Primary Green**: `#62d962` — Action buttons, accents, borders, focus states
-- **Dark Background**: `#0a0a0a` — Page background, hero sections
-- **Dark Gray**: `#1a1a1a` — Card backgrounds, darker accents
-- **Light Gray**: `#f8f8f8` — Form sections, summary cards
-- **Text Primary**: `#1a1a1a` — Dark backgrounds
-- **Text Secondary**: `#666` or `#888` — Muted text
-- **Text Light**: `#f0f0f0` or `#aaa` — On dark backgrounds
+| Token | Value | Use |
+|-------|-------|-----|
+| Primary Green | `#62d962` | Buttons, accents, borders, focus states |
+| Dark Background | `#0a0a0a` | Page background, hero sections |
+| Dark Gray | `#1a1a1a` | Card backgrounds |
+| Light Gray | `#f8f8f8` | Form sections, summary cards |
+| Text Muted | `#666` / `#888` | Secondary text |
+| Text On Dark | `#f0f0f0` / `#aaa` | Text on dark backgrounds |
 
 ### Page Header Pattern
-
-Every list page should have this header pattern:
 
 ```razor
 <div class="page-header">
@@ -226,40 +222,30 @@ Every list page should have this header pattern:
 ### Form Styling
 
 ```css
-.form-group {
-  margin-bottom: 1.5rem;
-}
+.form-group { margin-bottom: 1.5rem; }
 
 .form-group label {
-  display: block;
-  font-weight: 600;
-  color: #333;
-  margin-bottom: 0.5rem;
-  font-size: 0.95rem;
+    display: block;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 0.5rem;
+    font-size: 0.95rem;
 }
 
 .form-control {
-  width: 100%;
-  padding: 0.75rem;
-  border: 1px solid #ddd;
-  border-radius: 3px;
-  font-size: 0.95rem;
-  font-family: inherit;
-  transition:
-    border-color 0.2s,
-    box-shadow 0.2s;
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+    font-size: 0.95rem;
+    transition: border-color 0.2s, box-shadow 0.2s;
 }
 
 /* ✅ Green focus state — matches FanHub branding */
 .form-control:focus {
-  outline: none;
-  border-color: #62d962;
-  box-shadow: 0 0 0 3px rgba(98, 217, 98, 0.1);
-}
-
-textarea.form-control {
-  resize: vertical;
-  font-family: inherit;
+    outline: none;
+    border-color: #62d962;
+    box-shadow: 0 0 0 3px rgba(98, 217, 98, 0.1);
 }
 ```
 
@@ -267,37 +253,28 @@ textarea.form-control {
 
 ```css
 .btn-submit {
-  width: 100%;
-  padding: 0.85rem;
-  background: #62d962;
-  color: #0a0a0a;
-  border: none;
-  border-radius: 3px;
-  font-weight: 700;
-  font-size: 0.95rem;
-  cursor: pointer;
-  transition:
-    background 0.2s,
-    transform 0.1s;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
+    width: 100%;
+    padding: 0.85rem;
+    background: #62d962;
+    color: #0a0a0a;
+    border: none;
+    border-radius: 3px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.1s;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
 }
 
-/* Lift effect on hover */
 .btn-submit:hover {
-  background: #80e880;
-  transform: translateY(-1px);
+    background: #80e880;
+    transform: translateY(-1px);  /* Lift effect */
 }
 
-/* Secondary buttons */
 .btn-secondary {
-  background: transparent;
-  color: #62d962;
-  border: 2px solid #62d962;
-}
-
-.btn-secondary:hover {
-  background: rgba(98, 217, 98, 0.1);
+    background: transparent;
+    color: #62d962;
+    border: 2px solid #62d962;
 }
 ```
 
@@ -305,57 +282,49 @@ textarea.form-control {
 
 ```css
 .entity-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 1.5rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
 }
 
 .entity-card {
-  background: white;
-  border: 1px solid #e0e0e0;
-  border-top: 3px solid #62d962; /* ✅ Green accent */
-  border-radius: 4px;
-  padding: 1.5rem;
-  transition:
-    box-shadow 0.2s,
-    transform 0.1s;
+    background: white;
+    border: 1px solid #e0e0e0;
+    border-top: 3px solid #62d962;  /* ✅ Green accent */
+    border-radius: 4px;
+    padding: 1.5rem;
+    transition: box-shadow 0.2s, transform 0.1s;
 }
 
-/* Lift and shadow on hover */
 .entity-card:hover {
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
-  transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+    transform: translateY(-2px);
 }
 ```
 
 ### Responsive Layout
 
 ```css
-/* Two-column form + list on desktop, single column on mobile */
 .entity-container {
-  padding: 0 2rem 2rem;
-  display: grid;
-  grid-template-columns: 1fr 2fr;
-  gap: 2rem;
+    padding: 0 2rem 2rem;
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 2rem;
 }
 
 @@media (max-width: 900px) {
-  .entity-container {
-    grid-template-columns: 1fr;
-  }
+    .entity-container { grid-template-columns: 1fr; }
 }
 ```
 
 ### Empty States & Loading
 
 ```razor
-<!-- Empty state with emoji and clear messaging -->
 @if (items == null || items.Count == 0)
 {
     <p class="empty-state">No items yet. Be the first to add one!</p>
 }
 
-<!-- Loading state -->
 @if (isLoading)
 {
     <p class="loading">Loading items...</p>
@@ -363,31 +332,14 @@ textarea.form-control {
 ```
 
 ```css
-.empty-state {
-  text-align: center;
-  color: #999;
-  padding: 3rem 2rem;
-  font-size: 1.05rem;
-}
-
-.loading {
-  text-align: center;
-  color: #666;
-  padding: 2rem;
-}
-```
-
-### Error Messages
-
-```css
+.empty-state { text-align: center; color: #999; padding: 3rem 2rem; }
+.loading { text-align: center; color: #666; padding: 2rem; }
 .error-message {
-  color: #d32f2f;
-  margin-top: 1rem;
-  padding: 0.75rem;
-  background: rgba(211, 47, 47, 0.1);
-  border-left: 4px solid #d32f2f;
-  border-radius: 3px;
-  font-size: 0.9rem;
+    color: #d32f2f;
+    padding: 0.75rem;
+    background: rgba(211, 47, 47, 0.1);
+    border-left: 4px solid #d32f2f;
+    border-radius: 3px;
 }
 ```
 
@@ -397,18 +349,13 @@ textarea.form-control {
 
 ### `@` Symbol Escaping in String Interpolation
 
-The `@` symbol is special in Razor. String interpolation like `S@episode.SeasonId` conflicts with Razor syntax.
-
-**✅ Double the `@` symbol:**
+The `@` symbol is special in Razor — use `@@` to escape it:
 
 ```razor
-<!-- ✅ CORRECT — @@ escapes to single @ -->
+<!-- ✅ CORRECT -->
 <option value="@ep.Id">S@@ep.SeasonId E@@ep.EpisodeNumber: @ep.Title</option>
 
-<!-- ❌ WRONG — conflicts with Razor syntax -->
-<option value="@ep.Id">S@ep.SeasonId E@ep.EpisodeNumber: @ep.Title</option>
-
-<!-- ✅ ALTERNATIVE — use helper method -->
+<!-- ✅ ALTERNATIVE — use a helper method -->
 <option value="@ep.Id">@FormatEpisode(ep)</option>
 
 @code {
@@ -419,13 +366,10 @@ The `@` symbol is special in Razor. String interpolation like `S@episode.SeasonI
 
 ### CSS `@media` in Scoped Styles
 
-**✅ Escape with `@@media`:**
-
 ```css
+/* ✅ Escape with @@ */
 @@media (max-width: 900px) {
-  .container {
-    grid-template-columns: 1fr;
-  }
+    .container { grid-template-columns: 1fr; }
 }
 ```
 
@@ -435,16 +379,12 @@ The `@` symbol is special in Razor. String interpolation like `S@episode.SeasonI
 
 ### Summary Card
 
-Display entity count on the homepage:
-
 ```razor
 <div class="summary-stat">
     <span class="stat-number">@quotesCount</span>
     <span class="stat-label">Quotes</span>
 </div>
 ```
-
-Load count in `OnInitializedAsync()`:
 
 ```csharp
 var quotes = await Http.GetFromJsonAsync<List<Quote>>("api/quotes");
@@ -453,70 +393,20 @@ quotesCount = quotes?.Count ?? 0;
 
 ### Nav Card
 
-Add card linking to entity list page:
-
 ```razor
 <a href="/quotes" class="nav-card">
     <div class="nav-card-icon">💬</div>
     <h2>Quotes</h2>
-    <p>Iconic moments and memorable lines from Breaking Bad. Like and share your favorites.</p>
+    <p>Iconic moments and memorable lines from Breaking Bad.</p>
     <span class="nav-card-cta">View Quotes →</span>
 </a>
-```
-
-```css
-.nav-card {
-  display: block;
-  text-decoration: none;
-  background: #fff;
-  border: 1px solid #e0e0e0;
-  border-top: 3px solid #62d962;
-  border-radius: 4px;
-  padding: 2rem;
-  transition:
-    box-shadow 0.2s,
-    transform 0.1s;
-}
-
-.nav-card:hover {
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
-  transform: translateY(-2px);
-  text-decoration: none;
-}
-
-.nav-card-icon {
-  font-size: 2.5rem;
-  margin-bottom: 1rem;
-}
-
-.nav-card h2 {
-  font-size: 1.4rem;
-  font-weight: 700;
-  color: #1a1a1a;
-  margin-bottom: 0.75rem;
-}
-
-.nav-card p {
-  color: #666;
-  font-size: 0.95rem;
-  line-height: 1.6;
-  margin-bottom: 1.25rem;
-}
-
-.nav-card-cta {
-  font-weight: 700;
-  color: #62d962;
-  font-size: 0.875rem;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-}
 ```
 
 ---
 
 ## Model Classes
 
-Frontend models should **mirror backend models exactly** in structure and naming:
+Frontend models mirror backend models exactly:
 
 ```csharp
 namespace Frontend.Models;
@@ -539,25 +429,13 @@ public class Quote
 
 ## Component Checklist
 
-Before considering a component complete:
-
-- [ ] Component compiles without errors or warnings
-- [ ] All collections are null-checked before iteration
+- [ ] All collections null-checked before iteration
 - [ ] Loading state displays while fetching data
 - [ ] Empty state displays when no items exist
-- [ ] Form has proper validation and error messages
 - [ ] Related entities use dropdowns (not numeric inputs)
-- [ ] All form inputs have focus states (green border + glow)
+- [ ] All form inputs have green focus states
 - [ ] Submit button has hover lift effect
-- [ ] Cards display in responsive grid (stacks on mobile)
-- [ ] Cards have hover lift and shadow effects
+- [ ] Cards display in responsive grid
 - [ ] Page header matches FanHub design (gradient + green border)
-- [ ] All colors use FanHub palette (#62d962 green, dark backgrounds)
-- [ ] No `@` symbol escaping issues (`@@` used where needed)
-- [ ] Transitions are smooth (0.1–0.2s duration)
-- [ ] Typography uses semantic hierarchy (h1, h2, p with proper sizes)
-- [ ] Tested on mobile (responsive design works)
-- [ ] No hardcoded URLs (use relative paths)
-- [ ] Error handling in place (try-catch with user-friendly messages)
-
----
+- [ ] `@@` used for `@` escaping in Razor where needed
+- [ ] Error handling in place with user-friendly messages

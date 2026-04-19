@@ -32,6 +32,19 @@ Other language implementations (`node/`, `go/`, `java/`) exist but are **not the
 
 ---
 
+## Available Skills
+
+Load these skills when working in the relevant area — they contain full patterns, code examples, and gotchas:
+
+| Skill | When to use |
+| ----- | ----------- |
+| `dotnet-backend` | Writing or fixing C# controllers, models, EF Core queries, seeding, or unit tests |
+| `dotnet-frontend` | Writing or fixing Blazor components, data loading, forms, styling, or Razor syntax |
+| `create-card-and-page` | Adding a new entity type — scaffolds full-stack backend + frontend in one pass |
+| `check-data-accuracy` | Verifying seed data matches canonical Breaking Bad lore |
+
+---
+
 ## Reference Docs
 
 | Document                                                                       | Purpose                                                              |

@@ -31,9 +31,9 @@ protected override async Task OnInitializedAsync()
         var task1 = Http.GetFromJsonAsync<List<Quote>>("api/quotes");
         var task2 = Http.GetFromJsonAsync<List<Character>>("api/characters");
         var task3 = Http.GetFromJsonAsync<List<Episode>>("api/episodes");
-        
+
         await Task.WhenAll(task1, task2, task3);
-        
+
         quotes = await task1;
         characters = await task2;
         episodes = await task3;
@@ -154,7 +154,7 @@ private async Task HandleSubmit()
 {
     errorMessage = null;
 
-    if (newQuote.CharacterId == 0 || newQuote.EpisodeId == 0 || 
+    if (newQuote.CharacterId == 0 || newQuote.EpisodeId == 0 ||
         string.IsNullOrWhiteSpace(newQuote.QuoteText))
     {
         errorMessage = "Please fill in all fields";
@@ -227,37 +227,39 @@ Every list page should have this header pattern:
 
 ```css
 .form-group {
-    margin-bottom: 1.5rem;
+  margin-bottom: 1.5rem;
 }
 
 .form-group label {
-    display: block;
-    font-weight: 600;
-    color: #333;
-    margin-bottom: 0.5rem;
-    font-size: 0.95rem;
+  display: block;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 0.5rem;
+  font-size: 0.95rem;
 }
 
 .form-control {
-    width: 100%;
-    padding: 0.75rem;
-    border: 1px solid #ddd;
-    border-radius: 3px;
-    font-size: 0.95rem;
-    font-family: inherit;
-    transition: border-color 0.2s, box-shadow 0.2s;
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #ddd;
+  border-radius: 3px;
+  font-size: 0.95rem;
+  font-family: inherit;
+  transition:
+    border-color 0.2s,
+    box-shadow 0.2s;
 }
 
 /* ✅ Green focus state — matches FanHub branding */
 .form-control:focus {
-    outline: none;
-    border-color: #62d962;
-    box-shadow: 0 0 0 3px rgba(98, 217, 98, 0.1);
+  outline: none;
+  border-color: #62d962;
+  box-shadow: 0 0 0 3px rgba(98, 217, 98, 0.1);
 }
 
 textarea.form-control {
-    resize: vertical;
-    font-family: inherit;
+  resize: vertical;
+  font-family: inherit;
 }
 ```
 
@@ -265,35 +267,37 @@ textarea.form-control {
 
 ```css
 .btn-submit {
-    width: 100%;
-    padding: 0.85rem;
-    background: #62d962;
-    color: #0a0a0a;
-    border: none;
-    border-radius: 3px;
-    font-weight: 700;
-    font-size: 0.95rem;
-    cursor: pointer;
-    transition: background 0.2s, transform 0.1s;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
+  width: 100%;
+  padding: 0.85rem;
+  background: #62d962;
+  color: #0a0a0a;
+  border: none;
+  border-radius: 3px;
+  font-weight: 700;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition:
+    background 0.2s,
+    transform 0.1s;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
 }
 
 /* Lift effect on hover */
 .btn-submit:hover {
-    background: #80e880;
-    transform: translateY(-1px);
+  background: #80e880;
+  transform: translateY(-1px);
 }
 
 /* Secondary buttons */
 .btn-secondary {
-    background: transparent;
-    color: #62d962;
-    border: 2px solid #62d962;
+  background: transparent;
+  color: #62d962;
+  border: 2px solid #62d962;
 }
 
 .btn-secondary:hover {
-    background: rgba(98, 217, 98, 0.1);
+  background: rgba(98, 217, 98, 0.1);
 }
 ```
 
@@ -301,24 +305,26 @@ textarea.form-control {
 
 ```css
 .entity-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 1.5rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
 }
 
 .entity-card {
-    background: white;
-    border: 1px solid #e0e0e0;
-    border-top: 3px solid #62d962;  /* ✅ Green accent */
-    border-radius: 4px;
-    padding: 1.5rem;
-    transition: box-shadow 0.2s, transform 0.1s;
+  background: white;
+  border: 1px solid #e0e0e0;
+  border-top: 3px solid #62d962; /* ✅ Green accent */
+  border-radius: 4px;
+  padding: 1.5rem;
+  transition:
+    box-shadow 0.2s,
+    transform 0.1s;
 }
 
 /* Lift and shadow on hover */
 .entity-card:hover {
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
-    transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  transform: translateY(-2px);
 }
 ```
 
@@ -327,16 +333,16 @@ textarea.form-control {
 ```css
 /* Two-column form + list on desktop, single column on mobile */
 .entity-container {
-    padding: 0 2rem 2rem;
-    display: grid;
-    grid-template-columns: 1fr 2fr;
-    gap: 2rem;
+  padding: 0 2rem 2rem;
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 2rem;
 }
 
 @@media (max-width: 900px) {
-    .entity-container {
-        grid-template-columns: 1fr;
-    }
+  .entity-container {
+    grid-template-columns: 1fr;
+  }
 }
 ```
 
@@ -358,16 +364,16 @@ textarea.form-control {
 
 ```css
 .empty-state {
-    text-align: center;
-    color: #999;
-    padding: 3rem 2rem;
-    font-size: 1.05rem;
+  text-align: center;
+  color: #999;
+  padding: 3rem 2rem;
+  font-size: 1.05rem;
 }
 
 .loading {
-    text-align: center;
-    color: #666;
-    padding: 2rem;
+  text-align: center;
+  color: #666;
+  padding: 2rem;
 }
 ```
 
@@ -375,13 +381,13 @@ textarea.form-control {
 
 ```css
 .error-message {
-    color: #d32f2f;
-    margin-top: 1rem;
-    padding: 0.75rem;
-    background: rgba(211, 47, 47, 0.1);
-    border-left: 4px solid #d32f2f;
-    border-radius: 3px;
-    font-size: 0.9rem;
+  color: #d32f2f;
+  margin-top: 1rem;
+  padding: 0.75rem;
+  background: rgba(211, 47, 47, 0.1);
+  border-left: 4px solid #d32f2f;
+  border-radius: 3px;
+  font-size: 0.9rem;
 }
 ```
 
@@ -406,7 +412,7 @@ The `@` symbol is special in Razor. String interpolation like `S@episode.SeasonI
 <option value="@ep.Id">@FormatEpisode(ep)</option>
 
 @code {
-    private string FormatEpisode(Episode ep) 
+    private string FormatEpisode(Episode ep)
         => $"S{ep.SeasonId} E{ep.EpisodeNumber}: {ep.Title}";
 }
 ```
@@ -417,9 +423,9 @@ The `@` symbol is special in Razor. String interpolation like `S@episode.SeasonI
 
 ```css
 @@media (max-width: 900px) {
-    .container {
-        grid-template-columns: 1fr;
-    }
+  .container {
+    grid-template-columns: 1fr;
+  }
 }
 ```
 
@@ -460,47 +466,49 @@ Add card linking to entity list page:
 
 ```css
 .nav-card {
-    display: block;
-    text-decoration: none;
-    background: #fff;
-    border: 1px solid #e0e0e0;
-    border-top: 3px solid #62d962;
-    border-radius: 4px;
-    padding: 2rem;
-    transition: box-shadow 0.2s, transform 0.1s;
+  display: block;
+  text-decoration: none;
+  background: #fff;
+  border: 1px solid #e0e0e0;
+  border-top: 3px solid #62d962;
+  border-radius: 4px;
+  padding: 2rem;
+  transition:
+    box-shadow 0.2s,
+    transform 0.1s;
 }
 
 .nav-card:hover {
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
-    transform: translateY(-2px);
-    text-decoration: none;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  transform: translateY(-2px);
+  text-decoration: none;
 }
 
 .nav-card-icon {
-    font-size: 2.5rem;
-    margin-bottom: 1rem;
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
 }
 
 .nav-card h2 {
-    font-size: 1.4rem;
-    font-weight: 700;
-    color: #1a1a1a;
-    margin-bottom: 0.75rem;
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin-bottom: 0.75rem;
 }
 
 .nav-card p {
-    color: #666;
-    font-size: 0.95rem;
-    line-height: 1.6;
-    margin-bottom: 1.25rem;
+  color: #666;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin-bottom: 1.25rem;
 }
 
 .nav-card-cta {
-    font-weight: 700;
-    color: #62d962;
-    font-size: 0.875rem;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
+  font-weight: 700;
+  color: #62d962;
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
 }
 ```
 
@@ -553,16 +561,3 @@ Before considering a component complete:
 - [ ] Error handling in place (try-catch with user-friendly messages)
 
 ---
-
-## Example: Complete Professional Component
-
-See [`dotnet/Frontend/Components/Pages/Quotes.razor`](../../dotnet/Frontend/Components/Pages/Quotes.razor) for a production-quality example that implements:
-
-- Null-safe SSR handling
-- Wrapped API response deserialization
-- Two-column responsive layout
-- Professional form styling with green accents
-- Card grid with hover effects
-- Empty/loading states
-- Error messages
-- Parallel data loading

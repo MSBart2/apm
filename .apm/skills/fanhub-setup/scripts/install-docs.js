@@ -36,6 +36,8 @@ try {
 
 const srcDocsDir = path.join(packageRoot, "fanhubdocs");
 const destDocsDir = path.join(process.cwd(), "fanhubdocs");
+const srcAgentsFile = path.join(srcDocsDir, "AGENTS.md");
+const destAgentsFile = path.join(process.cwd(), "AGENTS.md");
 
 try {
   // Check if source docs directory exists
@@ -51,33 +53,37 @@ try {
     console.log(`Created docs directory: ${destDocsDir}`);
   }
 
-  // Copy all files from source to destination
+  // Copy all files from fanhubdocs/ to destination, except AGENTS.md (handled separately)
   let fileCopied = 0;
   const files = fs.readdirSync(srcDocsDir);
 
   files.forEach((file) => {
+    if (file === "AGENTS.md") return; // copied to repo root below
+
     const srcFile = path.join(srcDocsDir, file);
     const destFile = path.join(destDocsDir, file);
     const stat = fs.statSync(srcFile);
 
     if (stat.isFile()) {
       fs.copyFileSync(srcFile, destFile);
-      console.log(`  ✓ Copied: ${file}`);
+      console.log(`  ✓ Copied: fanhubdocs/${file}`);
       fileCopied++;
     }
   });
 
+  // Copy pre-built AGENTS.md to repo root (bypasses apm compile)
+  if (fs.existsSync(srcAgentsFile)) {
+    fs.copyFileSync(srcAgentsFile, destAgentsFile);
+    console.log(`  ✓ Copied: AGENTS.md → repo root`);
+    fileCopied++;
+  } else {
+    console.warn(`  ⚠ AGENTS.md not found in package — skipping`);
+  }
+
   console.log("");
   console.log(`✓ FanHub documentation installed (${fileCopied} file(s))`);
-  console.log(`  Location: ${destDocsDir}`);
-  console.log("");
-  console.log("📚 Available documents:");
-  files.forEach((file) => {
-    const stat = fs.statSync(path.join(srcDocsDir, file));
-    if (stat.isFile()) {
-      console.log(`  - ${file}`);
-    }
-  });
+  console.log(`  Docs location: ${destDocsDir}`);
+  console.log(`  AGENTS.md:     ${destAgentsFile}`);
 
   process.exit(0);
 } catch (error) {

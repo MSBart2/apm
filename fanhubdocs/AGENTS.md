@@ -1,8 +1,3 @@
----
-description: FanHub workshop codebase instructions for fixing bugs with Copilot
-applyTo: "**"
----
-
 # FanHub Copilot Instructions
 
 > **Active implementation**: `dotnet/` — ASP.NET Core Web API backend + Blazor Server frontend
@@ -22,8 +17,8 @@ FanHub is a Breaking Bad fan site. It serves characters, episodes, quotes, lore,
 Other language implementations (`node/`, `go/`, `java/`) exist but are **not the focus**.
 
 > For deep implementation details:
-> - **Backend**: Routes, models, EF Core setup, seed data, configuration — see [`architecture-backend.md`](../../fanhubdocs/architecture-backend.md)
-> - **Frontend**: Components, data fetch patterns, conventions — see [`architecture-frontend.md`](../../fanhubdocs/architecture-frontend.md)
+> - **Backend**: Routes, models, EF Core setup, seed data, configuration — see [`architecture-backend.md`](fanhubdocs/architecture-backend.md)
+> - **Frontend**: Components, data fetch patterns, conventions — see [`architecture-frontend.md`](fanhubdocs/architecture-frontend.md)
 
 ---
 
@@ -41,8 +36,8 @@ Other language implementations (`node/`, `go/`, `java/`) exist but are **not the
 
 | Document                                                                       | Purpose                                                              |
 | ------------------------------------------------------------------------------ | -------------------------------------------------------------------- |
-| [`architecture-backend.md`](../../fanhubdocs/architecture-backend.md)           | Backend: API routes, models, EF, seed data, config, security         |
-| [`architecture-frontend.md`](../../fanhubdocs/architecture-frontend.md)         | Frontend: Blazor components, data fetch, conventions                 |
+| [`architecture-backend.md`](fanhubdocs/architecture-backend.md)           | Backend: API routes, models, EF, seed data, config, security         |
+| [`architecture-frontend.md`](fanhubdocs/architecture-frontend.md)         | Frontend: Blazor components, data fetch, conventions                 |
 | [`dotnet/BUGS.md`](./dotnet/BUGS.md)                                           | Bug catalog with evidence and fix guidance                           |
 | [`dotnet/SETUP.md`](./dotnet/SETUP.md)                                         | Detailed setup instructions                                          |
 | [`fanhubdocs/breaking-bad-universe.md`](./fanhubdocs/breaking-bad-universe.md) | Domain lore: characters, locations, show history                     |

@@ -6,7 +6,7 @@
 
 <div class="{entityNames}-page">
     <div class="page-header">
-        <div class="page-header-label">FanHub · Breaking Bad</div>
+        <div class="page-header-label">FanHub · {ShowName}</div>
         <h1>{Plural Label}</h1>
         <p class="page-subtitle">{Tagline or description}</p>
         @if ({entityNames} != null)
@@ -111,7 +111,7 @@
                         {
                             <span class="card-tag">S@(episode.SeasonId)E@(episode.EpisodeNumber)</span>
                         }
-                        <span class="card-tag">Breaking Bad</span>
+                        <span class="card-tag">{ShowName}</span>
                     </div>
                 </div>
             }

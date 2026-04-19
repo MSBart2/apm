@@ -118,6 +118,9 @@ _Steps 7–8 are parallel._
 - **File**: `dotnet/Frontend/Components/Pages/Episodes.razor`
 - Dark theme, amber season filter pills/dropdown
 - Episode cards: dark bg, amber left border, air date muted
+- **Add Season 6 option** to the season filter dropdown (currently hardcoded to 5 seasons; Peaky Blinders has 6)
+- Change subtitle from `"Season guide for Breaking Bad"` → `"Season guide for Peaky Blinders"`
+- Replace all `#62d962` green in the `<style>` block with `#c8a45a` (4 occurrences: `border-bottom`, `color` ×2, `border-left`, `box-shadow`)
 
 ### Step 14: Quotes.razor — New page
 
@@ -130,7 +133,41 @@ _Steps 7–8 are parallel._
 
 - **File**: `dotnet/Frontend/wwwroot/favicon.png` — replace with amber/gold icon
 
-_Steps 9–10 first (layout), then 11–14 in parallel. Step 15 independent._
+### Step 15a: NavMenu.razor — Remove dead Blazor template links
+
+- **File**: `dotnet/Frontend/Components/Layout/NavMenu.razor`
+- This file is vestigial (the app uses `NavBar.razor` via `MainLayout.razor`), but still ships with the default Blazor template content: brand text "Frontend", Counter and Weather nav links
+- Update brand text to "Peaky Blinders" (or remove the file's nav links entirely since `NavMenu` is not rendered)
+- Remove Counter and Weather `<NavLink>` entries — they are dead routes with no backing pages
+
+### Step 15b: NavMenu.razor.css — Remove default Blazor active-state colours
+
+- **File**: `dotnet/Frontend/Components/Layout/NavMenu.razor.css`
+- Currently uses `rgba(255,255,255,0.37)` white ghost for `.active` and white hover — Blazor template defaults
+- Update `.nav-item ::deep a.active` and hover states to match the dark/amber design system (amber highlight + amber left border)
+
+### Step 15c: MainLayout.razor.css — Remove blue sidebar gradient and light top-row
+
+- **File**: `dotnet/Frontend/Components/Layout/MainLayout.razor.css`
+- `.sidebar` currently uses `linear-gradient(180deg, rgb(5, 39, 103) 0%, #3a0647 70%)` — a leftover blue/purple Blazor template gradient unrelated to either show
+- `.top-row` uses `background-color: #f7f7f7` — light grey, not dark theme
+- `#blazor-error-ui` uses `background: lightyellow` — light theme artifact
+- Replace all three with dark theme values: sidebar → `#0a0a0a` solid; top-row → `#0a0a0a`; error-ui background → dark amber (`#1a0a00`)
+
+### Step 15d: NotFound.razor — Replace bare placeholder page
+
+- **File**: `dotnet/Frontend/Components/Pages/NotFound.razor`
+- Currently only `<h3>Not Found</h3>` with no layout, styling, or branding — an obvious visual artifact
+- Replace with a full dark 404 page: large amber `404` numeral, "By order of the Peaky Blinders" tagline, amber "Return Home" CTA matching the site design system
+
+### Step 15e: Error.razor — Replace generic Blazor error boilerplate
+
+- **File**: `dotnet/Frontend/Components/Pages/Error.razor`
+- Currently renders Bootstrap `text-danger` red headings and verbose developer-mode documentation text — completely mismatched with the dark theme
+- Replace with a dark-themed minimal error page: crimson `⚠` icon, amber-styled request ID, amber "Return Home" CTA
+- Preserve the `@code` block (`ShowRequestId` / `RequestId` / `OnInitialized`)
+
+_Steps 15a–15e are independent of each other. Do alongside Steps 9–14. Steps 9–10 first (layout shell), then 11–15 in parallel._
 
 ---
 

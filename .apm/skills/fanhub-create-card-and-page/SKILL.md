@@ -22,8 +22,9 @@ Ask if unclear; otherwise assume and proceed:
 3. **Plural label** — for stat card and nav (`"Quotes"`, `"Locations"`)
 4. **Nav icon** — single emoji (📍, 💬)
 5. **FK relationships?** → yes = Template B required; no = Template A
+6. **Show name** — for `{ShowName}` placeholder in header and card tags (e.g. `Breaking Bad`, `Peaky Blinders`)
 
-Seed 12–15 records from `docs/breaking-bad-universe.md`.
+Seed 12–15 records from the relevant universe doc in `fanhubdocs/`.
 
 ---
 

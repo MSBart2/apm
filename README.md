@@ -2,133 +2,247 @@
 
 A package manager for GitHub Copilot customization assets that installs into the [FanHub](https://github.com/MSBart2/FanHub) workshop repository.
 
-## What Is This?
+**What Is This?** [FanHub](https://github.com/MSBart2/FanHub) ships intentionally broken and unconfigured — that's the point. During the [CopilotWorkshop](https://github.com/MSBart2/CopilotWorkshop), participants build every Copilot customization artifact (instructions, prompts, skills, agents, MCP servers) from scratch across modules 01–06. **This repo contains the finished versions**, packaged for single-command installation.
 
-[FanHub](https://github.com/MSBart2/FanHub) ships intentionally broken and unconfigured — that's the point. During the [CopilotWorkshop](https://github.com/MSBart2/CopilotWorkshop), participants build every Copilot customization artifact (instructions, prompts, skills, agents, MCP servers) from scratch across modules 01–06. **This repo contains the finished versions of all those artifacts**, packaged so they can be installed in one command.
+**Use it to:**
+- **Demo the "after" state** — install everything, show Copilot working brilliantly, then uninstall and have participants rebuild
+- **Get unstuck** — reference or cherry-pick individual assets mid-workshop
+- **Bootstrap a FanHub fork** — skip the build-from-scratch phase and go straight to feature work
 
-Use it to:
+---
 
-- **Demo the "after" state** at the start of a workshop — install everything, show Copilot working brilliantly, then uninstall and have participants rebuild it piece by piece
-- **Get unstuck** — reference or cherry-pick individual files mid-workshop
-- **Bootstrap a new FanHub fork** — skip the build-from-scratch phase and go straight to feature work
-
-## What's Included
-
-This repo **is** the package — a complete Copilot AI layer for FanHub's all four language tracks (Node.js, `.NET`, Java, Go). Includes shared instructions, prompts, skills, agents, REST API access, and database connectivity via MCP servers.
-
-| Module | Type                    | What It Adds                                                                                                                                             |
-| ------ | ----------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 01     | Repository instructions | `.github/copilot-instructions.md` — coding conventions, architecture pointers, and bug-fix guidance for FanHub                                           |
-| 01     | Backend architecture    | `fanhubdocs/architecture-backend.md` — ASP.NET Core API, EF Core, models, seed data, database (via `apm run install-docs`)                              |
-| 01     | Frontend architecture   | `fanhubdocs/architecture-frontend.md` — Blazor Server frontend, components, data fetch patterns (via `apm run install-docs`)                            |
-| 01     | Lore doc                | `fanhubdocs/breaking-bad-universe.md` — Breaking Bad canon reference for skills and agents (via `apm run install-docs`)                                  |
-| 03     | Prompts (×6)            | `check-data-accuracy`, `good-idea`, `plan-loreCardAndLorePage`, `prompt-to-skill`, `refresh-docs`, `risk-prioritizer`                                    |
-| 04     | Skills (×3)             | `check-data-accuracy`, `lore-accuracy-check`, `new-card-skill` (includes scripts + templates)                                                            |
-| 05     | Setup skill & MCP       | `fanhub-setup` skill — Safe merge of MCP servers (fanhub-api, language-track SQLite) + doc deployment via `apm run setup-mcp` and `apm run install-docs` |
-| 06     | Agents (×2)             | `scaffold-entity.agent.md`, `plan.agent.md`                                                                                                              |
-
-## Installation
-
-### Prerequisites
+## Prerequisites
 
 - A fork or clone of [FanHub](https://github.com/MSBart2/FanHub)
 - GitHub Copilot (Individual, Business, or Enterprise)
 - VS Code with the [GitHub Copilot](https://marketplace.visualstudio.com/items?itemName=GitHub.copilot) extension
-- Node.js (for the MCP server and `apm` CLI)
+- **Node.js 16+** (required for APM CLI, MCP server execution, and setup scripts)
 
-### Install
+---
 
-```bash
-# From inside your cloned FanHub repo:
-apm install MSBart2/apm        # deploys primitives, prompts, skills, agents, + fanhub-setup skill
-node .github/skills/fanhub-setup/scripts/merge-mcp.js    # configures MCP servers
-node .github/skills/fanhub-setup/scripts/install-docs.js # installs documentation
-apm compile                    # generates AGENTS.md from instructions
-```
+## Getting Started
 
-**Note**: The `merge-mcp.js` and `install-docs.js` scripts are deployed by the `fanhub-setup` skill as part of `apm install`. Just run them directly with Node.js.
+### Quick Install
 
-The `merge-mcp.js` script safely merges FanHub's MCP server definitions into your existing `.vscode/mcp.json` without overwriting pre-existing servers. See [mcp-servers.json](mcp-servers.json) for the included servers. The `install-docs.js` script copies FanHub documentation to `fanhubdocs/` for Copilot context.
-
-### Uninstall
-
-To completely remove the APM package and all its generated/installed files:
+From inside your cloned FanHub repo:
 
 ```bash
-apm uninstall MSBart2/apm      # removes prompts, agents, skills, instructions from .github/
-rm -rf fanhubdocs/             # removes installed docs
-apm compile --clean            # removes orphaned AGENTS.md and CLAUDE.md
+# 1. Install the APM package (deploys prompts, skills, agents, + setup scripts)
+apm install MSBart2/apm
+
+# 2. Configure MCP servers and install documentation
+node .github/skills/fanhub-setup/scripts/merge-mcp.js
+node .github/skills/fanhub-setup/scripts/install-docs.js
+
+# 3. Build compiled Copilot context files
+apm compile
+
+# 4. Start the FanHub backend (example: .NET)
+cd dotnet/Backend && dotnet run
 ```
 
-This removes only what APM added:
-
-- Integrated prompt/agent/skill/instruction files from `.github/` (handled by `apm uninstall`)
-- Installed documentation files from `fanhubdocs/`
-- Compiled `AGENTS.md` and `CLAUDE.md` files
-
-Pre-existing files in your repo are preserved.
-
-### What lands in your FanHub repo
+### What Gets Installed
 
 ```
 fanhub/
 ├── .github/
-│   ├── copilot-instructions.md      ← module 01
-│   ├── prompts/                     ← module 03
+│   ├── copilot-instructions.md      ← Module 01: Repo instructions
+│   ├── prompts/                     ← Module 03: 6 custom prompts
 │   │   ├── check-data-accuracy.prompt.md
-│   │   ├── good-idea.prompt.md
+│   │   ├── good-idea-fairy.prompt.md
 │   │   ├── plan-loreCardAndLorePage.prompt.md
 │   │   ├── prompt-to-skill.prompt.md
 │   │   ├── refresh-docs.prompt.md
 │   │   └── risk-prioritizer.prompt.md
-│   ├── skills/                      ← module 04 + fanhub-setup
+│   ├── skills/                      ← Module 04: 3 skills + Module 05 setup
 │   │   ├── check-data-accuracy/
 │   │   ├── lore-accuracy-check/
 │   │   ├── new-card-skill/
-│   │   └── fanhub-setup/            ← setup & documentation deployment
-│   │       └── scripts/             ← MCP and doc installation scripts
-│   │           ├── merge-mcp.js     ← called via apm run setup-mcp
-│   │           └── install-docs.js  ← called via apm run install-docs
-│   └── agents/                      ← module 06
-│       ├── scaffold-entity.agent.md
+│   │   └── fanhub-setup/            ← MCP config & doc deployment
+│   │       └── scripts/
+│   │           ├── merge-mcp.js     ← Merges MCP server definitions
+│   │           └── install-docs.js  ← Copies docs to fanhubdocs/
+│   └── agents/                      ← Module 06: 2 agents
+│       ├── fanhub-content-author.agent.md
 │       └── plan.agent.md
-├── fanhubdocs/                      ← via apm run install-docs
-│   ├── architecture-backend.md
-│   ├── architecture-frontend.md
-│   └── breaking-bad-universe.md
+├── fanhubdocs/                      ← Installed by merge-mcp.js
+│   ├── architecture-backend.md      ← ASP.NET Core, EF Core, models
+│   ├── architecture-frontend.md     ← Blazor Server, components, patterns
+│   └── breaking-bad-universe.md     ← Breaking Bad lore reference
+├── AGENTS.md                        ← Generated by apm compile
+├── CLAUDE.md                        ← Generated by apm compile (context only)
 └── .vscode/
-    └── mcp.json                     ← wires fanhub-api + fanhub-db MCP servers (via apm run setup-mcp)
+    └── mcp.json                     ← MCP server configuration
 ```
 
-### After install — configure and start
+### Installation Walkthrough
+
+**Step 1: Install package & scripts**
+```bash
+apm install MSBart2/apm
+```
+Deploys prompts, skills, agents, and the `fanhub-setup` skill (containing scripts).
+
+**Step 2: Configure MCP servers**
+```bash
+node .github/skills/fanhub-setup/scripts/merge-mcp.js
+```
+Safely merges FanHub MCP servers into `.vscode/mcp.json` without overwriting existing servers:
+- `fanhub-api` — REST API access (localhost:5265)
+- `fanhub-db-dotnet` — SQLite for .NET backend
+- `fanhub-db-node` — SQLite for Node.js backend
+- `fanhub-db-java` — SQLite for Java backend
+- `fanhub-db-go` — SQLite for Go backend
+
+See [mcp-servers.json](mcp-servers.json) for full MCP config.
+
+**Step 3: Install documentation**
+```bash
+node .github/skills/fanhub-setup/scripts/install-docs.js
+```
+Copies architecture guides and lore docs to `fanhubdocs/` for Copilot context.
+
+**Step 4: Build Copilot context**
+```bash
+apm compile
+```
+Generates `AGENTS.md` and `CLAUDE.md` from instructions. These files provide compiled context for Copilot at runtime.
+
+### Verification
+
+After install, verify everything is working:
 
 ```bash
-# One-time setup after apm install
-node .github/skills/fanhub-setup/scripts/merge-mcp.js    # Configure MCP servers
-node .github/skills/fanhub-setup/scripts/install-docs.js # Install documentation
+# Check instructions were deployed
+ls -la .github/copilot-instructions.md
 
-# Then start your backend for any language track, e.g. .NET:
-cd dotnet/Backend && dotnet run
+# Verify MCP servers are configured
+cat .vscode/mcp.json | grep fanhub
+
+# Check documentation was installed
+ls -la fanhubdocs/
+
+# Verify compiled context files
+ls -la AGENTS.md CLAUDE.md
 ```
 
-The scripts handle configuration safely:
+### Direct Script Usage (Alternative)
 
-- `merge-mcp.js` merges FanHub's MCP server definitions into `.vscode/mcp.json` without overwriting pre-existing servers
-- `install-docs.js` copies documentation to `fanhubdocs/` for Copilot context
+If `apm run` is unavailable, run scripts directly:
 
-## Workshop Demo (5-minute reveal)
+```bash
+# Same as apm run setup-mcp
+node .github/skills/fanhub-setup/scripts/merge-mcp.js
 
-See [WALKTHROUGH.md](WALKTHROUGH.md) for the step-by-step script used to show participants the "after" state at the start of a session — including what Copilot says _before_ and _after_ installing the plugin.
+# Same as apm run install-docs
+node .github/skills/fanhub-setup/scripts/install-docs.js
+```
 
-## Relationship to FanHub
+---
 
-FanHub is a Breaking Bad fan site (characters, episodes, quotes, lore) built across four language tracks — Node.js, .NET, Java, Go — with 183+ deliberate bugs. It is designed to be painful to work in _without_ proper Copilot configuration.
+## Testing
 
-This APM repo is the configuration layer that makes Copilot effective inside it. The `.NET` track is the primary target today; other language tracks may get their own packages later.
+### Verify MCP Server Connectivity
+
+After configuration, check that MCP servers are responding:
+
+```bash
+# Test fanhub-api server (requires backend running on port 5265)
+curl http://localhost:5265/api/characters
+
+# Verify SQLite databases exist (check one example)
+file dotnet/Backend/fanhub.db
+```
+
+### Manual Testing
+
+1. **Restart VS Code** to reload Copilot context and MCP servers
+2. **Open Copilot Chat** and ask: `What is this codebase? What tech stack does it use?`
+   - Before install: Generic answer, no project context
+   - After install: Detailed answer referencing FanHub, Breaking Bad context, architecture
+3. **Verify MCP integration** in Copilot: Ask for database operations or API queries
+
+### Troubleshooting Installation
+
+| Issue | Cause | Fix |
+|-------|-------|-----|
+| `mcp-servers.json not found` | APM package not installed | Run `apm install MSBart2/apm` first |
+| MCP servers missing from `.vscode/mcp.json` | Script didn't run or failed | `rm .vscode/mcp.json && node .github/skills/fanhub-setup/scripts/merge-mcp.js` |
+| Docs not visible in Copilot | VS Code needs reload | Restart VS Code or reload window |
+| API server errors | Backend not running | Start backend: `cd dotnet/Backend && dotnet run` |
+
+---
+
+## Architecture
+
+### Package Structure
+
+This is an **APM package** for GitHub Copilot assets:
+
+- **`.apm/instructions/`** — Repository instructions (deployed to `.github/copilot-instructions.md`)
+- **`.apm/prompts/`** — Custom prompts for Copilot (deployed to `.github/prompts/`)
+- **`.apm/skills/`** — Executable skills with scripts and templates (deployed to `.github/skills/`)
+- **`.apm/agents/`** — Agent definitions (deployed to `.github/agents/`)
+- **`fanhubdocs/`** — Reference documentation (architecture, lore, design notes)
+- **`mcp-servers.json`** — MCP server configuration (merged into `.vscode/mcp.json`)
+- **`apm.yml`** — APM package metadata (name, version, dependencies)
+
+### Module Mapping (CopilotWorkshop)
+
+| Module | Content | File Path |
+|--------|---------|-----------|
+| **01** | Copilot instructions | `.apm/instructions/copilot-instructions.instructions.md` |
+| **01** | Architecture docs | `fanhubdocs/architecture-*.md` |
+| **03** | Prompts (×6) | `.apm/prompts/*.prompt.md` |
+| **04** | Skills (×3) | `.apm/skills/{check-data-accuracy,lore-accuracy-check,new-card-skill}/` |
+| **05** | MCP setup | `.apm/skills/fanhub-setup/` + `mcp-servers.json` |
+| **06** | Agents (×2) | `.apm/agents/*.agent.md` |
+
+### Copilot Context Flow
+
+1. **Repository instructions** (`.github/copilot-instructions.md`) — Always loaded, provides project context
+2. **Compiled context** (`AGENTS.md`, `CLAUDE.md`) — Generated from instructions, available as reference
+3. **MCP servers** (`.vscode/mcp.json`) — Provide runtime data access (API, databases)
+4. **Reference docs** (`fanhubdocs/`) — Used for deep context (architecture, lore)
+
+---
+
+## Uninstall
+
+To completely remove the APM package and all installed files:
+
+```bash
+# Remove deployed prompts, agents, skills, and instructions
+apm uninstall MSBart2/apm
+
+# Remove installed documentation
+rm -rf fanhubdocs/
+
+# Remove compiled context files
+apm compile --clean
+```
+
+This preserves pre-existing repo files; only APM-deployed content is removed.
+
+---
+
+## Workshop Demo
+
+See [WALKTHROUGH.md](WALKTHROUGH.md) for a 5-minute facilitator demo script that shows participants the "after" state at the start of a session — including what Copilot says before and after installing the plugin.
+
+---
+
+## About FanHub
+
+**FanHub** is a Breaking Bad fan site (characters, episodes, quotes, lore) built across four language tracks — Node.js, .NET, Java, Go — with 183+ deliberate bugs. It is designed to be painful to work in _without_ proper Copilot configuration.
+
+This APM repo is the configuration layer that makes Copilot effective inside it. The **.NET track is the primary target**; other language tracks may get their own packages later.
+
+---
 
 ## Contributing
 
-See [CONTRIBUTING.md](CONTRIBUTING.md).
+See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines on adding prompts, skills, agents, or documentation to this package.
 
 ## License
 
